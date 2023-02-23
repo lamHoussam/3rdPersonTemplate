@@ -16,6 +16,9 @@ namespace ThirdPersonTemplate
         [SerializeField] private float m_gravity;
         [SerializeField] private float m_maxJumpSpeed;
 
+        [Space]
+        [SerializeField] private float m_rollSpeed;
+
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
 
@@ -23,6 +26,7 @@ namespace ThirdPersonTemplate
 
         private bool m_isJumping, m_isFalling;
         private bool m_canMove;
+        private bool m_isRolling;
 
         private Vector3 m_planeMoveDirection;
 
@@ -30,6 +34,7 @@ namespace ThirdPersonTemplate
         private static readonly int m_animIDSpeed = Animator.StringToHash("Speed");
         private static readonly int m_animIDJump = Animator.StringToHash("Jump");
         private static readonly int m_animIDIsFalling = Animator.StringToHash("IsFalling");
+        private static readonly int m_animIDRoll = Animator.StringToHash("Roll");
         #endregion
 
         private CharacterController m_CharacterController;
@@ -43,6 +48,7 @@ namespace ThirdPersonTemplate
             m_currentSpeed = m_targetSpeed = 0;
             m_isFalling = false;
             m_isJumping = false;
+            m_isRolling = false;
             m_canMove = true;
 
             m_planeMoveDirection = Vector2.zero;
@@ -98,6 +104,30 @@ namespace ThirdPersonTemplate
             m_Animator.SetTrigger(m_animIDJump);
         }
 
+        public void Roll()
+        {
+            if (m_isJumping || m_isFalling) 
+                return;
+
+            m_Animator.SetTrigger(m_animIDRoll);
+            m_canMove = false;
+            m_isRolling = true;
+        }
+
+        private void ManageRoll()
+        {
+            if (!m_isRolling)
+                return;
+
+            m_CharacterController.Move(Time.deltaTime * m_rollSpeed * transform.forward);
+        }
+
+        public void OnStopRoll()
+        {
+            m_isRolling = false;
+            m_canMove = true;
+        }
+
         public void Gravity()
         {
             if (m_CharacterController.isGrounded && m_isFalling)
@@ -129,6 +159,7 @@ namespace ThirdPersonTemplate
         private void Update()
         {
             Gravity();
+            ManageRoll();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ThirdPersonTemplate
         public Vector2 move;
         public Vector2 look;
         public bool jump;
+        public bool roll;
 
         private void OnMove(InputValue value)
         {
@@ -23,6 +24,11 @@ namespace ThirdPersonTemplate
         private void OnJump(InputValue value)
         {
             jump = value.isPressed;
+        }
+
+        private void OnRoll(InputValue value)
+        {
+            roll = value.isPressed;
         }
     }
 }
