@@ -8,6 +8,7 @@ namespace ThirdPersonTemplate
     {
         public Vector2 move;
         public Vector2 look;
+        public bool jump;
 
         private void OnMove(InputValue value)
         {
@@ -17,6 +18,11 @@ namespace ThirdPersonTemplate
         private void OnLook(InputValue value)
         {
             look = value.Get<Vector2>();
+        }
+
+        private void OnJump(InputValue value)
+        {
+            jump = value.isPressed;
         }
     }
 }

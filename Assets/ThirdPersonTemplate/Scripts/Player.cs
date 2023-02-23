@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace ThirdPersonTemplate
 {
-    public class Player : MonoBehaviour
+    public class Player : Humanoid
     {
-        private Movement m_Movement;
         private InputAsset m_Input;
 
-        private void Awake()
+        public override void Awake()
         {
-            m_Movement = GetComponent<Movement>();
+            base.Awake();
             m_Input = GetComponent<InputAsset>();
         }
 
@@ -19,6 +18,12 @@ namespace ThirdPersonTemplate
         {
             Vector3 moveDir = new Vector3(m_Input.move.x, 0, m_Input.move.y).normalized;
             m_Movement.Move(moveDir);
+
+            if (m_Input.jump)
+            {
+                m_Movement.Jump();
+                m_Input.jump = false;
+            }
         }
     }
 }
