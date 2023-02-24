@@ -6,7 +6,7 @@ namespace ThirdPersonTemplate
     public class Player : Humanoid
     {
         private InputAsset m_Input;
-        private Camera m_Camera;
+        private CameraController m_Camera;
 
         [SerializeField] private CameraSettings m_StandCameraSettings, m_CrouchCameraSettings;
 
@@ -15,7 +15,7 @@ namespace ThirdPersonTemplate
             base.Awake();
 
             m_Input = GetComponent<InputAsset>();
-            m_Camera = Camera.main;
+            m_Camera = Camera.main.GetComponent<CameraController>();
         }
 
         private void Update()
@@ -28,7 +28,7 @@ namespace ThirdPersonTemplate
 
             if (m_Input.roll)
             {
-                m_Movement.Roll();
+                m_Movement.Roll(m_Camera.transform.forward);
                 m_Input.roll = false;
             }
 
@@ -36,7 +36,7 @@ namespace ThirdPersonTemplate
             {
                 bool crouch = m_Movement.Crouch();
 
-                m_Camera.GetComponent<CameraController>().BlendBetweenCameraSettings(crouch ? m_CrouchCameraSettings : m_StandCameraSettings);
+                m_Camera.BlendBetweenCameraSettings(crouch ? m_CrouchCameraSettings : m_StandCameraSettings);
                 m_Input.crouch = false;
             }
 

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static UnityEngine.LightAnchor;
 
 namespace ThirdPersonTemplate
 {
@@ -115,15 +116,20 @@ namespace ThirdPersonTemplate
             m_Animator.SetTrigger(m_animIDJump);
         }
 
-        public void Roll()
+        public void Roll(Vector3 rollDirection)
         {
-            if (m_isJumping || m_isFalling) 
+            if (m_isJumping || m_isFalling)
                 return;
+
+            float angle = Mathf.Atan2(rollDirection.x, rollDirection.z) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
             m_Animator.SetTrigger(m_animIDRoll);
             m_canMove = false;
             m_isRolling = true;
         }
+
+        public void Roll() => Roll(transform.forward);
 
         private void ManageRoll()
         {

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59fb758e3594524592d36011997f0f6, type: 3}
   m_Name: CrouchCameraSettings
   m_EditorClassIdentifier: 
-  m_offset: {x: 1, y: 0.9}
-  m_distance: 1.5
+  m_offset: {x: 0.7, y: 0.9}
+  m_distance: 1.4
   m_cameraLerpTime: 40
