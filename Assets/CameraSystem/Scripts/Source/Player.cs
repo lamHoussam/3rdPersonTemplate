@@ -1,3 +1,4 @@
+using CameraSystem;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -5,11 +6,17 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float m_speed;
     [SerializeField] private float RotationSmoothTime;
+    [Space]
+    [SerializeField] private CameraSettings m_StandSettings;
+    [SerializeField] private CameraSettings m_CrouchSettings;
+
+    private bool m_crouched;
 
     private Camera m_Camera;
     private float m_targetRotation;
     private void Awake()
     {
+        m_crouched = false;
         m_Camera = Camera.main;
     }
 
@@ -35,6 +42,13 @@ public class Player : MonoBehaviour
             Vector3 targetDirection = Quaternion.Euler(0.0f, m_targetRotation, 0.0f) * Vector3.forward;
             transform.position += m_speed * Time.deltaTime * targetDirection.normalized;
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            m_crouched = !m_crouched;
+            m_Camera.GetComponent<CameraController>().BlendBetweenCameraSettings(m_crouched ? m_CrouchSettings : m_StandSettings);
+        }
+
 
         // move the player
 

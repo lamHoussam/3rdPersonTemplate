@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Target: {fileID: 1157153176}
   m_distance: 6
   m_offset: {x: 0.8, y: 1}
-  m_cameraLerpTime: 50
+  m_cameraLerpTime: 20
   m_minPitchValue: -10
   m_maxPitchValue: 70
   m_yawMinValue: -180
@@ -552,7 +552,8 @@ MonoBehaviour:
   m_cameraCollisionLayer:
     serializedVersion: 2
     m_Bits: 1
-  m_active: 0
+  m_active: 1
+  m_transitionLerpTime: 4
 --- !u!1 &1157153172
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 20
   RotationSmoothTime: 0
+  m_StandSettings: {fileID: 11400000, guid: ddb5991a72c7533418a8bf03d99db3a4, type: 2}
+  m_CrouchSettings: {fileID: 11400000, guid: 9aa74ec06d19e8c449abb81916eb6174, type: 2}
 --- !u!1 &1387304039
 GameObject:
   m_ObjectHideFlags: 0

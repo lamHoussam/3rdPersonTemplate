@@ -19,6 +19,9 @@ namespace ThirdPersonTemplate
         [Space]
         [SerializeField] private float m_rollSpeed;
 
+        [Space]
+        [SerializeField] private float m_crouchSpeed;
+
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
 
@@ -28,6 +31,8 @@ namespace ThirdPersonTemplate
         private bool m_canMove;
         private bool m_isRolling;
 
+        private bool m_isCrouched;
+
         private Vector3 m_planeMoveDirection;
 
         #region Animation IDs
@@ -35,6 +40,7 @@ namespace ThirdPersonTemplate
         private static readonly int m_animIDJump = Animator.StringToHash("Jump");
         private static readonly int m_animIDIsFalling = Animator.StringToHash("IsFalling");
         private static readonly int m_animIDRoll = Animator.StringToHash("Roll");
+        private static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
         #endregion
 
         private CharacterController m_CharacterController;
@@ -49,6 +55,7 @@ namespace ThirdPersonTemplate
             m_isFalling = false;
             m_isJumping = false;
             m_isRolling = false;
+            m_isCrouched = false;
             m_canMove = true;
 
             m_planeMoveDirection = Vector2.zero;
@@ -57,18 +64,22 @@ namespace ThirdPersonTemplate
         public void Move(Vector3 direction, Transform camera = null)
         {
             if (!m_canMove)
+            {
+                Debug.Log("Cant MOve");
                 return;
+            }
 
 
             Rotate(direction, out Vector3 finalDirection, camera);
 
+            m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_speed;
+            m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_targetSpeed;
 
-            m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_speed;
             m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
 
             m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
 
-            if (!m_isFalling)
+            if (!m_isFalling && !m_isJumping)
                 m_planeMoveDirection = finalDirection;
 
             m_CharacterController.Move(m_currentSpeed * Time.deltaTime * m_planeMoveDirection + m_verticalSpeed * Time.deltaTime * Vector3.up);
@@ -100,7 +111,7 @@ namespace ThirdPersonTemplate
             Debug.Log("Jump now");
 
             m_isJumping = true;
-            m_isFalling = false;
+            //m_isFalling = false;
             m_Animator.SetTrigger(m_animIDJump);
         }
 
@@ -154,6 +165,24 @@ namespace ThirdPersonTemplate
 
             if (m_isFalling)
                 m_verticalSpeed -= Time.deltaTime * m_gravity;
+        }
+
+        public bool Crouch()
+        {
+            m_isCrouched = !m_isCrouched;
+            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+
+            return m_isCrouched;
+        }
+
+        public void DeactivateMovement()
+        {
+            m_canMove = false;
+        }
+
+        public void ActivateMovement()
+        {
+            m_canMove = true;
         }
 
         private void Update()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using UnityEditor;
 using UnityEditor.Build.Content;
 using UnityEngine;
@@ -24,6 +25,9 @@ namespace CameraSystem
         private SerializedProperty spEnableCameraCollision;
         private SerializedProperty spCameraCollisionLayer;
 
+        // Blend
+        private SerializedProperty spTransitionLerpTime;
+
         private void OnEnable()
         {
             spTarget = serializedObject.FindProperty("m_Target");
@@ -44,14 +48,18 @@ namespace CameraSystem
 
             spEnableCameraCollision = serializedObject.FindProperty("m_enableCameraCollision");
             spCameraCollisionLayer = serializedObject.FindProperty("m_cameraCollisionLayer");
+
+
+            spTransitionLerpTime = serializedObject.FindProperty("m_transitionLerpTime");
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(spTarget);
+            EditorGUILayout.PropertyField(spActive);
 
+            EditorGUILayout.PropertyField(spTarget);
 
             // Values
             EditorGUILayout.Space();
@@ -92,20 +100,31 @@ namespace CameraSystem
 
             // Collisions
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(spEnableCameraCollision);
-            if (spEnableCameraCollision.boolValue)
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+
+            EditorGUILayout.LabelField("Collision", EditorStyles.boldLabel);
+
+            using (new EditorGUI.IndentLevelScope())
             {
-                EditorGUILayout.BeginVertical(GUI.skin.box);
-
-                using (new EditorGUI.IndentLevelScope())
-                {
+                EditorGUILayout.PropertyField(spEnableCameraCollision);
+                if (spEnableCameraCollision.boolValue)
                     EditorGUILayout.PropertyField(spCameraCollisionLayer);
-                }
-
-                EditorGUILayout.EndVertical();
             }
 
-            EditorGUILayout.PropertyField(spActive);
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space();
+
+            // Blend
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+
+            EditorGUILayout.LabelField("Blend", EditorStyles.boldLabel);
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(spTransitionLerpTime);
+            }
+
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }

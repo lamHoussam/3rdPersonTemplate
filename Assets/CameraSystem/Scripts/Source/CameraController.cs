@@ -24,6 +24,11 @@ namespace CameraSystem
         [SerializeField] private bool m_active;
         public bool Active => m_active;
 
+        [SerializeField] private float m_transitionLerpTime;
+        private bool m_isBlending;
+
+        private CameraSettings m_TargetSettings;
+
 
         private float m_yaw, m_pitch;
         private void LateUpdate()
@@ -31,6 +36,18 @@ namespace CameraSystem
             if (!m_Target || !Active) return;
             SetPitchYaw();
             ThirdPersonCamera();
+        }
+
+        private void Update()
+        {
+            if (!m_isBlending)
+                return;
+
+            m_distance = Mathf.Lerp(m_distance, m_TargetSettings.Distance, m_transitionLerpTime * Time.deltaTime);
+            m_offset = Vector2.Lerp(m_offset, m_TargetSettings.Offset, m_transitionLerpTime * Time.deltaTime);
+
+            if (m_distance == m_TargetSettings.Distance && m_offset == m_TargetSettings.Offset)
+                SetCameraSettings(m_TargetSettings);
         }
 
         public void SetPitchYaw()
@@ -101,6 +118,27 @@ namespace CameraSystem
                 0,
                 vec.x * sin + vec.z * cos
             );
+        }
+
+        public void SetCameraSettings(CameraSettings settings)
+        {
+            m_offset = settings.Offset;
+            m_distance = settings.Distance;
+            m_cameraLerpTime = settings.CameraLerpTime;
+            StopBlend();
+        }
+
+        public void BlendBetweenCameraSettings(CameraSettings settings)
+        {
+            m_isBlending = true;
+            m_TargetSettings = settings;
+
+            m_cameraLerpTime = settings.CameraLerpTime;
+        }
+
+        public void StopBlend()
+        {
+            m_isBlending = false;
         }
     }
 }
