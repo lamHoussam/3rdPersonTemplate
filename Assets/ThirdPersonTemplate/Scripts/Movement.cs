@@ -9,18 +9,14 @@ namespace ThirdPersonTemplate
         [SerializeField] private float m_speed, m_walkSpeed;
         [SerializeField] private float m_acceleration;
 
-        [Space]
         [SerializeField] private float m_rotationSmoothTime;
 
-        [Space]
         [SerializeField] private float m_jumpForce;
         [SerializeField] private float m_gravity;
         [SerializeField] private float m_maxJumpSpeed;
 
-        [Space]
         [SerializeField] private float m_rollSpeed;
 
-        [Space]
         [SerializeField] private float m_crouchSpeed;
 
         private float m_currentSpeed, m_targetSpeed;
@@ -66,7 +62,7 @@ namespace ThirdPersonTemplate
         {
             if (!m_canMove)
             {
-                Debug.Log("Cant MOve");
+                //Debug.Log("Cant MOve");
                 return;
             }
 

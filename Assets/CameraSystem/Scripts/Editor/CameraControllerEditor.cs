@@ -77,7 +77,7 @@ namespace CameraSystem
 
 
             // Angles
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Angles", EditorStyles.boldLabel);
 
@@ -99,7 +99,7 @@ namespace CameraSystem
 
 
             // Collisions
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
             EditorGUILayout.BeginVertical(GUI.skin.box);
 
             EditorGUILayout.LabelField("Collision", EditorStyles.boldLabel);
@@ -113,7 +113,7 @@ namespace CameraSystem
 
             EditorGUILayout.EndVertical();
 
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
 
             // Blend
             EditorGUILayout.BeginVertical(GUI.skin.box);
