@@ -25,10 +25,11 @@ namespace ThirdPersonTemplate
         private float m_verticalSpeed;
 
         private bool m_isJumping, m_isFalling;
-        private bool m_canMove;
+        private bool m_canMove, m_canJump;
         private bool m_isRolling;
 
         private bool m_isCrouched;
+        public bool IsCrouched => m_isCrouched;
 
         private Vector3 m_planeMoveDirection;
 
@@ -53,7 +54,11 @@ namespace ThirdPersonTemplate
             m_isJumping = false;
             m_isRolling = false;
             m_isCrouched = false;
+
+
             m_canMove = true;
+            m_canJump = true;
+
 
             m_planeMoveDirection = Vector2.zero;
         }
@@ -84,7 +89,8 @@ namespace ThirdPersonTemplate
 
         public void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
         {
-            finalDirection = Vector3.zero;
+            finalDirection = (m_isJumping || m_isFalling) ? m_planeMoveDirection : Vector3.zero;
+
             if (!m_canMove)
                 return;
 
@@ -102,7 +108,7 @@ namespace ThirdPersonTemplate
 
         public void Jump()
         {
-            if (m_isJumping || m_isFalling)
+            if (m_isJumping || m_isFalling || !m_canJump)
                 return;
 
             Debug.Log("Jump now");
@@ -169,12 +175,17 @@ namespace ThirdPersonTemplate
                 m_verticalSpeed -= Time.deltaTime * m_gravity;
         }
 
-        public bool Crouch()
+        public void Crouch()
         {
+            if (m_isJumping || m_isFalling)
+                return;
+
             m_isCrouched = !m_isCrouched;
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
 
-            return m_isCrouched;
+            m_canJump = !m_isCrouched;
+
+            return;
         }
 
         public void DeactivateMovement()

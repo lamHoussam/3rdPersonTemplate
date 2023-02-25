@@ -15,6 +15,8 @@ namespace CameraSystem
         private SerializedProperty spOffset;
         private SerializedProperty spCameraLerpTime;
 
+        private SerializedProperty spAssetName, spAssetPath;
+
         private SerializedProperty spActive;
 
         // Yaw Pitch extremes
@@ -27,6 +29,7 @@ namespace CameraSystem
 
         // Blend
         private SerializedProperty spTransitionLerpTime;
+        private SerializedProperty spTransitionCurve;
 
         private void OnEnable()
         {
@@ -34,6 +37,9 @@ namespace CameraSystem
             spDistance = serializedObject.FindProperty("m_distance");
             spOffset = serializedObject.FindProperty("m_offset");
             spCameraLerpTime = serializedObject.FindProperty("m_cameraLerpTime");
+
+            spAssetName = serializedObject.FindProperty("m_assetName");
+            spAssetPath = serializedObject.FindProperty("m_assetPath");
 
             spActive = serializedObject.FindProperty("m_active");
 
@@ -51,6 +57,7 @@ namespace CameraSystem
 
 
             spTransitionLerpTime = serializedObject.FindProperty("m_transitionLerpTime");
+            spTransitionCurve = serializedObject.FindProperty("m_TransitionCurve");
         }
 
         public override void OnInspectorGUI()
@@ -62,7 +69,7 @@ namespace CameraSystem
             EditorGUILayout.PropertyField(spTarget);
 
             // Values
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Values", EditorStyles.boldLabel);
 
@@ -71,6 +78,15 @@ namespace CameraSystem
                 EditorGUILayout.PropertyField(spDistance);
                 EditorGUILayout.PropertyField(spOffset);
                 EditorGUILayout.PropertyField(spCameraLerpTime);
+
+                EditorGUILayout.LabelField("Camera Settings", EditorStyles.boldLabel);
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUILayout.PropertyField(spAssetName);
+                    EditorGUILayout.PropertyField(spAssetPath);
+                    if(GUILayout.Button("Generate Camera Settings"))
+                        GenerateCameraSettingsAsset();
+                }
             }
 
             EditorGUILayout.EndVertical();
@@ -122,11 +138,29 @@ namespace CameraSystem
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUILayout.PropertyField(spTransitionLerpTime);
+                EditorGUILayout.PropertyField(spTransitionCurve);
             }
 
             EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        public void GenerateCameraSettingsAsset()
+        {
+            CameraSettings asset = ScriptableObject.CreateInstance<CameraSettings>();
+
+            asset.Distance = spDistance.floatValue;
+            asset.Offset = spOffset.vector2Value;
+            asset.CameraLerpTime = spCameraLerpTime.floatValue;
+
+            AssetDatabase.CreateAsset(asset, spAssetPath.stringValue + "/" + spAssetName.stringValue + ".asset");
+            AssetDatabase.SaveAssets();
+
+            EditorUtility.FocusProjectWindow();
+
+            Selection.activeObject = asset;
+
         }
     }
 }

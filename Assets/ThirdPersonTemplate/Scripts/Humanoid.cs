@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThirdPersonTemplate
 {
-    public class Humanoid : MonoBehaviour
+    public abstract class Humanoid : MonoBehaviour
     {
         protected Movement m_Movement;
 

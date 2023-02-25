@@ -543,6 +543,8 @@ MonoBehaviour:
   m_Target: {fileID: 1157153176}
   m_distance: 6
   m_offset: {x: 0.8, y: 1}
+  m_assetName: CameraSetting
+  m_assetPath: Assets/CameraSystem/CameraSettings
   m_cameraLerpTime: 20
   m_minPitchValue: -10
   m_maxPitchValue: 70
@@ -554,6 +556,30 @@ MonoBehaviour:
     m_Bits: 1
   m_active: 1
   m_transitionLerpTime: 4
+  m_TransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1157153172
 GameObject:
   m_ObjectHideFlags: 0
