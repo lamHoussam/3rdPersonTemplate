@@ -123,7 +123,12 @@ namespace ThirdPersonTemplate
             if (m_isJumping || m_isFalling)
                 return;
 
-            Rotate(rollDirection, out Vector3 dir, camera);
+            Vector3 dir;
+            if (rollDirection == Vector3.zero)
+                dir = camera != null ? camera.transform.forward : transform.forward;
+            else
+                Rotate(rollDirection, out dir, camera);
+
 
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
@@ -140,7 +145,7 @@ namespace ThirdPersonTemplate
             if (!m_isRolling)
                 return;
 
-            m_CharacterController.Move(Time.deltaTime * m_rollSpeed * transform.forward);
+            m_CharacterController.Move(Time.deltaTime * m_rollSpeed * transform.forward + Time.deltaTime * m_verticalSpeed * Vector3.up);
         }
 
         public void OnStopRoll()
