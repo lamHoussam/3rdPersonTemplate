@@ -136,6 +136,7 @@ namespace ThirdPersonTemplate
 
             m_Animator.SetTrigger(m_animIDRoll);
             m_canMove = false;
+            m_canJump = false;
             m_isRolling = true;
         }
 
@@ -153,6 +154,7 @@ namespace ThirdPersonTemplate
         {
             m_isRolling = false;
             m_canMove = true;
+            m_canJump = true;
         }
 
         public void Gravity()
@@ -198,6 +200,13 @@ namespace ThirdPersonTemplate
                 return;
 
             m_isCrouched = !m_isCrouched;
+            if (m_isCrouched)
+            {
+
+                DeactivateJump();
+                DeactivateMovement();
+            }
+
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
 
             m_canJump = !m_isCrouched;
@@ -211,6 +220,16 @@ namespace ThirdPersonTemplate
         public void ActivateMovement()
         {
             m_canMove = true;
+        }
+
+        public void DeactivateJump()
+        {
+            m_canJump = false;
+        }
+
+        public void ActivateJump()
+        {
+            m_canJump = true;
         }
 
         private void Update()

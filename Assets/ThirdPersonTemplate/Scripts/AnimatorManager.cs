@@ -16,7 +16,11 @@ namespace ThirdPersonTemplate
         }
 
         public void OnStopRoll() => m_Movement.OnStopRoll();
+
         public void ActivateMovement() => m_Movement.ActivateMovement();
         public void DeactivateMovement() => m_Movement.DeactivateMovement();
+
+        public void ActivateJump() => m_Movement.ActivateJump();
+        public void DeactivateJump() => m_Movement.DeactivateJump();
     }
 }
