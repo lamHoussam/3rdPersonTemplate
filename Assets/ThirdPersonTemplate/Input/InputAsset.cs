@@ -13,6 +13,7 @@ namespace ThirdPersonTemplate
         public bool roll;
         public bool crouch;
         public bool sprint;
+        public bool switchShoulder;
 
         private void OnMove(InputValue value)
         {
@@ -42,6 +43,11 @@ namespace ThirdPersonTemplate
         private void OnSprint(InputValue value)
         {
             sprint = value.isPressed;
+        }
+
+        private void OnSwitch(InputValue value)
+        {
+            switchShoulder = value.isPressed;
         }
     }
 }

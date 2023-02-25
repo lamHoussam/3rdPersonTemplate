@@ -9,6 +9,9 @@ namespace ThirdPersonTemplate
         private CameraController m_Camera;
 
         [SerializeField] private CameraSettings m_StandCameraSettings, m_CrouchCameraSettings;
+        [SerializeField] private CameraSettings m_LeftCameraSettings, m_RightCameraSettings;
+
+        private bool m_rightShoulder;
 
         public override void Awake()
         {
@@ -16,6 +19,8 @@ namespace ThirdPersonTemplate
 
             m_Input = GetComponent<InputAsset>();
             m_Camera = Camera.main.GetComponent<CameraController>();
+
+            m_rightShoulder = true;
         }
 
         private void Update()
@@ -43,6 +48,14 @@ namespace ThirdPersonTemplate
                 m_Camera.BlendBetweenCameraSettings(m_Movement.IsCrouched ? m_CrouchCameraSettings : m_StandCameraSettings);
 
                 m_Input.crouch = false;
+            }
+
+            if (m_Input.switchShoulder)
+            {
+                m_rightShoulder = !m_rightShoulder;
+                m_Camera.BlendBetweenCameraSettings(m_rightShoulder ? m_RightCameraSettings : m_LeftCameraSettings);
+
+                m_Input.switchShoulder = false;
             }
 
         }

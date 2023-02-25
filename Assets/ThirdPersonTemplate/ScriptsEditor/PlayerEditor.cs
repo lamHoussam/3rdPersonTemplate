@@ -10,10 +10,16 @@ namespace ThirdPersonTemplate
         private SerializedProperty spStandCameraSettings;
         private SerializedProperty spCrouchCameraSettings;
 
+        private SerializedProperty spLeftCameraSettings;
+        private SerializedProperty spRightCameraSettings;
+
         private void OnEnable()
         {
             spStandCameraSettings = serializedObject.FindProperty("m_StandCameraSettings");
             spCrouchCameraSettings = serializedObject.FindProperty("m_CrouchCameraSettings");
+
+            spLeftCameraSettings = serializedObject.FindProperty("m_LeftCameraSettings");
+            spRightCameraSettings = serializedObject.FindProperty("m_RightCameraSettings");
         }
 
 
@@ -30,6 +36,9 @@ namespace ThirdPersonTemplate
             {
                 EditorGUILayout.PropertyField(spStandCameraSettings);
                 EditorGUILayout.PropertyField(spCrouchCameraSettings);
+                EditorGUILayout.PropertyField(spLeftCameraSettings);
+                EditorGUILayout.PropertyField(spRightCameraSettings);
+
             }
 
             EditorGUILayout.EndVertical();
