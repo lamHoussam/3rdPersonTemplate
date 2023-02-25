@@ -357,6 +357,7 @@ MonoBehaviour:
   m_assetName: 
   m_assetPath: 
   m_cameraLerpTime: 25
+  m_useYawLimit: 0
   m_minPitchValue: -10
   m_maxPitchValue: 70
   m_yawMinValue: -180
@@ -366,10 +367,28 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_active: 1
-  m_transitionLerpTime: 5
+  m_transitionLerpTime: 12
   m_TransitionCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 5.523818
+      outSlope: 5.523818
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.01978761
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -758,7 +777,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847129969}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.66, y: 1, z: 13.33}
+  m_LocalPosition: {x: -11, y: 1, z: 13}
   m_LocalScale: {x: 10, y: 3, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1101,7 +1120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686210329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.58, y: 6.95, z: 2.66}
+  m_LocalPosition: {x: -1, y: 0.47, z: 2.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1125,9 +1144,9 @@ MonoBehaviour:
   m_walkSpeed: 0
   m_acceleration: 10
   m_rotationSmoothTime: 0.1
-  m_jumpForce: 20
-  m_gravity: 14
-  m_maxJumpSpeed: 5.8
+  m_jumpForce: 30
+  m_gravity: 25
+  m_maxJumpSpeed: 7
   m_rollSpeed: 10
   m_crouchSpeed: 4
 --- !u!114 &1686210333

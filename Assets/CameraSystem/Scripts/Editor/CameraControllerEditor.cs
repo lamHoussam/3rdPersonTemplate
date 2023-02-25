@@ -22,6 +22,7 @@ namespace CameraSystem
         // Yaw Pitch extremes
         private SerializedProperty spMinPitchValue, spMaxPitchValue;
         private SerializedProperty spMinYawValue, spMaxYawValue;
+        private SerializedProperty spUseYawLimit;
 
         // Collision
         private SerializedProperty spEnableCameraCollision;
@@ -45,6 +46,7 @@ namespace CameraSystem
 
             spMinPitchValue = serializedObject.FindProperty("m_minPitchValue");
             spMaxPitchValue = serializedObject.FindProperty("m_maxPitchValue");
+            spUseYawLimit = serializedObject.FindProperty("m_useYawLimit");
 
             spMinYawValue = serializedObject.FindProperty("m_yawMinValue");
             spMaxYawValue = serializedObject.FindProperty("m_yawMaxValue");
@@ -105,10 +107,14 @@ namespace CameraSystem
                 EditorGUILayout.PropertyField(spMaxYawValue);
                 EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(spMinPitchValue);
-                EditorGUILayout.PropertyField(spMaxPitchValue);
-                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.PropertyField(spUseYawLimit);
+                if (spUseYawLimit.boolValue)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(spMinPitchValue);
+                    EditorGUILayout.PropertyField(spMaxPitchValue);
+                    EditorGUILayout.EndHorizontal();
+                }
             }
 
             EditorGUILayout.EndVertical();

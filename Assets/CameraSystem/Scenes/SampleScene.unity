@@ -546,6 +546,7 @@ MonoBehaviour:
   m_assetName: CameraSetting
   m_assetPath: Assets/CameraSystem/CameraSettings
   m_cameraLerpTime: 20
+  m_useYawLimit: 0
   m_minPitchValue: -10
   m_maxPitchValue: 70
   m_yawMinValue: -180

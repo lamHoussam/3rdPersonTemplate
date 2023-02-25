@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 namespace CameraSystem
@@ -17,6 +18,7 @@ namespace CameraSystem
         private float m_targetDistance;
         private Vector3 m_expectedPos, m_realOffset;
 
+        [SerializeField] private bool m_useYawLimit;
         [SerializeField] private float m_minPitchValue = -10, m_maxPitchValue = 70;
         [SerializeField] private float m_yawMinValue = -50, m_yawMaxValue = 50;
 
@@ -42,7 +44,7 @@ namespace CameraSystem
         private void LateUpdate()
         {
             if (!m_Target || !Active) return;
-            SetPitchYaw();
+            //SetPitchYaw();
             ThirdPersonCamera();
         }
 
@@ -71,7 +73,18 @@ namespace CameraSystem
             m_yaw += Input.GetAxis("Mouse X");
 
             m_pitch = ClampAngle(m_pitch, m_minPitchValue, m_maxPitchValue);
-            m_yaw = ClampAngle(m_yaw, m_yawMinValue, m_yawMaxValue);
+            if (m_useYawLimit)
+                m_yaw = ClampAngle(m_yaw, m_yawMinValue, m_yawMaxValue);
+        }
+
+        public void SetPitchYaw(Vector2 look)
+        {
+            m_pitch += look.y;
+            m_yaw += look.x;
+
+            m_pitch = ClampAngle(m_pitch, m_minPitchValue, m_maxPitchValue);
+            if (m_useYawLimit)
+                m_yaw = ClampAngle(m_yaw, m_yawMinValue, m_yawMaxValue);
 
         }
 

@@ -118,12 +118,14 @@ namespace ThirdPersonTemplate
             m_Animator.SetTrigger(m_animIDJump);
         }
 
-        public void Roll(Vector3 rollDirection)
+        public void Roll(Vector3 rollDirection, Transform camera = null)
         {
             if (m_isJumping || m_isFalling)
                 return;
 
-            float angle = Mathf.Atan2(rollDirection.x, rollDirection.z) * Mathf.Rad2Deg;
+            Rotate(rollDirection, out Vector3 dir, camera);
+
+            float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
             m_Animator.SetTrigger(m_animIDRoll);
@@ -193,8 +195,6 @@ namespace ThirdPersonTemplate
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
 
             m_canJump = !m_isCrouched;
-
-            return;
         }
 
         public void DeactivateMovement()

@@ -294,6 +294,17 @@
                 },
                 {
                     "name": "",
+                    "id": "cb54e2e2-4f9c-42bc-b4e2-1ee7a05cf2e2",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b15741d1-ab95-4f18-bce9-04b748f37162",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -305,11 +316,33 @@
                 },
                 {
                     "name": "",
+                    "id": "e45abffe-ebde-4680-8825-540dbaaf1150",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2249c761-6ce8-401c-aa07-0301fc1b7b47",
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12875752-5866-4f28-bf50-2d2588409706",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
