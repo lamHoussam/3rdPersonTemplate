@@ -149,14 +149,16 @@ namespace ThirdPersonTemplate
 
         public void Gravity()
         {
-            if (m_CharacterController.isGrounded && m_isFalling)
-            {
-                m_verticalSpeed = 0;
-                m_isFalling = false;
-                m_isJumping = false;
-                m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
-                return;
-            }
+            //if (m_CharacterController.isGrounded)
+            //{
+            //    m_verticalSpeed = 0;
+            //    m_isFalling = false;
+            //    m_isJumping = false;
+            //    m_Animator.SetBool(m_animIDIsFalling, false);
+            //    //return;
+            //}
+
+            m_isFalling = !m_CharacterController.isGrounded;
 
             if (m_isJumping)
             {
@@ -166,13 +168,20 @@ namespace ThirdPersonTemplate
                     m_isFalling = true;
                     m_isJumping = false;
 
-                    m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
+                    m_Animator.SetBool(m_animIDIsFalling, true);
                 }
+
+                return;
+
             }
 
 
             if (m_isFalling)
                 m_verticalSpeed -= Time.deltaTime * m_gravity;
+            else 
+                m_verticalSpeed = -0.1f;
+
+            m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
         }
 
         public void Crouch()
