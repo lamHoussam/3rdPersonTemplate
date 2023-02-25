@@ -19,7 +19,7 @@ namespace CameraSystem
 
         private SerializedProperty spActive;
 
-        // Yaw Pitch extremes
+        // Yaw, Pitch extremes
         private SerializedProperty spMinPitchValue, spMaxPitchValue;
         private SerializedProperty spMinYawValue, spMaxYawValue;
         private SerializedProperty spUseYawLimit;
@@ -31,6 +31,8 @@ namespace CameraSystem
         // Blend
         private SerializedProperty spTransitionLerpTime;
         private SerializedProperty spTransitionCurve;
+
+        private CameraController m_CameraController;
 
         private void OnEnable()
         {
@@ -60,6 +62,8 @@ namespace CameraSystem
 
             spTransitionLerpTime = serializedObject.FindProperty("m_transitionLerpTime");
             spTransitionCurve = serializedObject.FindProperty("m_TransitionCurve");
+
+            m_CameraController = target as CameraController;
         }
 
         public override void OnInspectorGUI()
@@ -148,6 +152,9 @@ namespace CameraSystem
             }
 
             EditorGUILayout.EndVertical();
+
+            if (!Application.isPlaying)
+                m_CameraController.ThirdPersonCamera();
 
             serializedObject.ApplyModifiedProperties();
         }

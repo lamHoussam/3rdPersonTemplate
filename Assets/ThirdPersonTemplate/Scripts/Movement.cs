@@ -63,7 +63,7 @@ namespace ThirdPersonTemplate
             m_planeMoveDirection = Vector2.zero;
         }
 
-        public void Move(Vector3 direction, Transform camera = null)
+        public void Move(Vector3 direction, bool isRunning = false, Transform camera = null)
         {
             if (!m_canMove)
             {
@@ -74,7 +74,8 @@ namespace ThirdPersonTemplate
 
             Rotate(direction, out Vector3 finalDirection, camera);
 
-            m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_speed;
+            m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_walkSpeed;
+            m_targetSpeed = isRunning ? m_speed : m_targetSpeed;
             m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_targetSpeed;
 
             m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);

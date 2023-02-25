@@ -44,7 +44,7 @@ namespace CameraSystem
         private void LateUpdate()
         {
             if (!m_Target || !Active) return;
-            //SetPitchYaw();
+            SetPitchYaw();
             ThirdPersonCamera();
         }
 
@@ -77,6 +77,7 @@ namespace CameraSystem
                 m_yaw = ClampAngle(m_yaw, m_yawMinValue, m_yawMaxValue);
         }
 
+
         public void SetPitchYaw(Vector2 look)
         {
             m_pitch += look.y;
@@ -88,7 +89,7 @@ namespace CameraSystem
 
         }
 
-        private void ThirdPersonCamera()
+        public void ThirdPersonCamera()
         {
             m_targetDistance = m_distance;
             //if (m_Player)

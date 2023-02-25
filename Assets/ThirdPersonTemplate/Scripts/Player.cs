@@ -21,7 +21,7 @@ namespace ThirdPersonTemplate
         private void Update()
         {
             Vector3 moveDir = new Vector3(m_Input.move.x, 0, m_Input.move.y).normalized;
-            m_Movement.Move(moveDir, m_Camera.transform);
+            m_Movement.Move(moveDir, m_Input.sprint, m_Camera.transform);
             m_Camera.SetPitchYaw(m_Input.look);
 
 

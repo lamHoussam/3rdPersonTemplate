@@ -7,6 +7,7 @@ namespace ThirdPersonTemplate
     public class MovementEditor : Editor
     {
         private SerializedProperty spSpeed;
+        private SerializedProperty spWalkSpeed;
         private SerializedProperty spAcceleration;
 
         private SerializedProperty spRotationSmoothTime;
@@ -22,6 +23,7 @@ namespace ThirdPersonTemplate
         private void OnEnable()
         {
             spSpeed = serializedObject.FindProperty("m_speed");
+            spWalkSpeed = serializedObject.FindProperty("m_walkSpeed");
             spAcceleration = serializedObject.FindProperty("m_acceleration");
 
             spRotationSmoothTime = serializedObject.FindProperty("m_rotationSmoothTime");
@@ -45,6 +47,7 @@ namespace ThirdPersonTemplate
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUILayout.PropertyField(spSpeed);
+                EditorGUILayout.PropertyField(spWalkSpeed);
                 EditorGUILayout.PropertyField(spAcceleration);
             }
 

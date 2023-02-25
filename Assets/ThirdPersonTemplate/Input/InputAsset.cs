@@ -1,3 +1,4 @@
+using UnityEditor.iOS.Xcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ namespace ThirdPersonTemplate
         public bool jump;
         public bool roll;
         public bool crouch;
+        public bool sprint;
 
         private void OnMove(InputValue value)
         {
@@ -35,6 +37,11 @@ namespace ThirdPersonTemplate
         private void OnCrouch(InputValue value)
         {
             crouch = value.isPressed;
+        }
+
+        private void OnSprint(InputValue value)
+        {
+            sprint = value.isPressed;
         }
     }
 }
