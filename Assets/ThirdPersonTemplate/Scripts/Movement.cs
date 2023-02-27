@@ -48,10 +48,13 @@ namespace ThirdPersonTemplate
         private CharacterController m_CharacterController;
         private Animator m_Animator;
 
+        private PlayerRaycaster m_PlayerRaycaster;
+
         private void Awake()
         {
             m_CharacterController = GetComponent<CharacterController>();
             m_Animator = GetComponentInChildren<Animator>();
+            m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
             m_currentSpeed = m_targetSpeed = 0;
             m_isFalling = false;
@@ -200,8 +203,11 @@ namespace ThirdPersonTemplate
             m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
         }
 
+
         private void Stand()
         {
+            if (!m_PlayerRaycaster.CanStand())
+                return;
             m_isCrouched = false;
         }
 
