@@ -20,6 +20,9 @@ namespace ThirdPersonTemplate
 
         private SerializedProperty spCrouchSpeed;
 
+        private SerializedProperty spCrouchHeight, spCrouchCenter;
+        private SerializedProperty spStandHeight, spStandCenter;
+
         private void OnEnable()
         {
             spSpeed = serializedObject.FindProperty("m_speed");
@@ -34,6 +37,11 @@ namespace ThirdPersonTemplate
 
             spRollSpeed = serializedObject.FindProperty("m_rollSpeed");
             spCrouchSpeed = serializedObject.FindProperty("m_crouchSpeed");
+
+            spCrouchHeight = serializedObject.FindProperty("m_crouchHeight");
+            spCrouchCenter = serializedObject.FindProperty("m_crouchCenter");
+            spStandHeight = serializedObject.FindProperty("m_standHeight");
+            spStandCenter = serializedObject.FindProperty("m_standCenter");
         }
 
         public override void OnInspectorGUI()
@@ -95,6 +103,12 @@ namespace ThirdPersonTemplate
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUILayout.PropertyField(spCrouchSpeed);
+
+                EditorGUILayout.Space();
+                EditorGUILayout.PropertyField(spCrouchHeight);
+                EditorGUILayout.PropertyField(spCrouchCenter);
+                EditorGUILayout.PropertyField(spStandHeight);
+                EditorGUILayout.PropertyField(spStandCenter);
             }
 
             EditorGUILayout.EndVertical();

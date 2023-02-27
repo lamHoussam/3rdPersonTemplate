@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.LightAnchor;
 
 namespace ThirdPersonTemplate
@@ -18,6 +19,9 @@ namespace ThirdPersonTemplate
         [SerializeField] private float m_rollSpeed;
 
         [SerializeField] private float m_crouchSpeed;
+
+        [SerializeField] private float m_crouchHeight, m_standHeight;
+        [SerializeField] private float m_crouchCenter, m_standCenter;
 
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
@@ -112,8 +116,6 @@ namespace ThirdPersonTemplate
             if (m_isJumping || m_isFalling || !m_canJump)
                 return;
 
-            Debug.Log("Jump now");
-
             m_isJumping = true;
             //m_isFalling = false;
             m_Animator.SetTrigger(m_animIDJump);
@@ -205,6 +207,16 @@ namespace ThirdPersonTemplate
 
                 DeactivateJump();
                 DeactivateMovement();
+
+                m_CharacterController.height = m_crouchHeight;
+                Vector3 center = m_CharacterController.center;
+                m_CharacterController.center = new Vector3(center.x, m_crouchCenter, center.z);
+            } else
+            {
+
+                m_CharacterController.height = m_standHeight;
+                Vector3 center = m_CharacterController.center;
+                m_CharacterController.center = new Vector3(center.x, m_standCenter, center.z);
             }
 
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);

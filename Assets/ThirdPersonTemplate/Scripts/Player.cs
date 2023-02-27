@@ -13,6 +13,7 @@ namespace ThirdPersonTemplate
 
         private bool m_rightShoulder;
 
+
         public override void Awake()
         {
             base.Awake();
