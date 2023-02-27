@@ -140,6 +140,8 @@ namespace ThirdPersonTemplate
             m_canMove = false;
             m_canJump = false;
             m_isRolling = true;
+
+            SetCharacterControllerHeightCenter();
         }
 
         public void Roll() => Roll(transform.forward);
@@ -157,6 +159,8 @@ namespace ThirdPersonTemplate
             m_isRolling = false;
             m_canMove = true;
             m_canJump = true;
+
+            SetCharacterControllerHeightCenter();
         }
 
         public void Gravity()
