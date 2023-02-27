@@ -45,7 +45,7 @@ namespace ThirdPersonTemplate
 
             if(m_Input.crouch)
             {
-                m_Movement.CrouchStand();
+                m_Movement.ChangeCrouchStandState();
                 m_Camera.BlendBetweenCameraSettings(m_Movement.IsCrouched ? m_CrouchCameraSettings : m_StandCameraSettings);
 
                 m_Input.crouch = false;

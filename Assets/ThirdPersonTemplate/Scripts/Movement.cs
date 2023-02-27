@@ -140,6 +140,7 @@ namespace ThirdPersonTemplate
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
             m_Animator.SetTrigger(m_animIDRoll);
+
             m_canMove = false;
             m_canJump = false;
             m_isRolling = true;
@@ -159,11 +160,13 @@ namespace ThirdPersonTemplate
 
         public void OnStopRoll()
         {
+            Debug.LogWarning(m_Animator.GetBool(m_animIDCrouch));
+
             m_isRolling = false;
             m_canMove = true;
             m_canJump = true;
 
-            SetCharacterControllerHeightCenter();
+            CrouchStand();
         }
 
         public void Gravity()
@@ -204,11 +207,16 @@ namespace ThirdPersonTemplate
         }
 
 
-        private void Stand()
+        private bool Stand()
         {
             if (!m_PlayerRaycaster.CanStand())
-                return;
+                return false;
             m_isCrouched = false;
+
+            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+            SetCharacterControllerHeightCenter();
+
+            return true;
         }
 
         private void Crouch()
@@ -217,9 +225,24 @@ namespace ThirdPersonTemplate
 
             DeactivateJump();
             DeactivateMovement();
+
+            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+            SetCharacterControllerHeightCenter();
         }
 
         public void CrouchStand()
+        {
+            if (!m_isCrouched)
+            {
+                bool val = Stand();
+                if (!val)
+                    Crouch();
+            }
+
+            SetCharacterControllerHeightCenter();
+        }
+
+        public void ChangeCrouchStandState()
         {
             if (m_isJumping || m_isFalling)
                 return;
@@ -230,8 +253,6 @@ namespace ThirdPersonTemplate
             else
                 Crouch();
 
-            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
-            SetCharacterControllerHeightCenter();
         }
 
         public void SetCharacterControllerHeightCenter()
