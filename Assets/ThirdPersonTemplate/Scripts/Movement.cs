@@ -196,32 +196,49 @@ namespace ThirdPersonTemplate
             m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
         }
 
-        public void Crouch()
+        private void Stand()
+        {
+            m_isCrouched = false;
+        }
+
+        private void Crouch()
+        {
+            m_isCrouched = true;
+
+            DeactivateJump();
+            DeactivateMovement();
+        }
+
+        public void CrouchStand()
         {
             if (m_isJumping || m_isFalling)
                 return;
 
-            m_isCrouched = !m_isCrouched;
+
             if (m_isCrouched)
+                Stand();
+            else
+                Crouch();
+
+            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+            SetCharacterControllerHeightCenter();
+        }
+
+        public void SetCharacterControllerHeightCenter()
+        {
+            if(m_isRolling || m_isCrouched)
             {
-
-                DeactivateJump();
-                DeactivateMovement();
-
                 m_CharacterController.height = m_crouchHeight;
                 Vector3 center = m_CharacterController.center;
                 m_CharacterController.center = new Vector3(center.x, m_crouchCenter, center.z);
-            } else
-            {
 
+            }
+            else
+            {
                 m_CharacterController.height = m_standHeight;
                 Vector3 center = m_CharacterController.center;
                 m_CharacterController.center = new Vector3(center.x, m_standCenter, center.z);
             }
-
-            m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
-
-            m_canJump = !m_isCrouched;
         }
 
         public void DeactivateMovement()
