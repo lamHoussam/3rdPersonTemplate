@@ -525,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.37, y: 2.17, z: -19.24}
+  m_LocalPosition: {x: 15.3, y: 2.17, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2504,18 +2504,22 @@ MonoBehaviour:
   m_speed: 6
   m_walkSpeed: 2.5
   m_acceleration: 10
-  m_rotationSmoothTime: 1
+  m_rotationSmoothTime: 0.1
   m_jumpForce: 30
   m_gravity: 25
   m_maxJumpSpeed: 7
+  m_activateJump: 1
   m_rollSpeed: 10
+  m_activateRoll: 1
   m_crouchSpeed: 2
   m_crouchHeight: 1
   m_standHeight: 1.8
   m_crouchCenter: 0.61
   m_standCenter: 1
+  m_activateCrouch: 1
   m_swimSpeed: 0
   m_buoyantForce: 0
+  m_activateSwim: 0
 --- !u!114 &1686210333
 MonoBehaviour:
   m_ObjectHideFlags: 0

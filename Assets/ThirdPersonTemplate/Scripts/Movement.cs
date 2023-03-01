@@ -5,24 +5,40 @@ namespace ThirdPersonTemplate
 {
     public class Movement : MonoBehaviour
     {
+
+        // Basic Movement
         [SerializeField] private float m_speed, m_walkSpeed;
         [SerializeField] private float m_acceleration;
 
         [SerializeField] private float m_rotationSmoothTime;
 
+        // Jump
         [SerializeField] private float m_jumpForce;
         [SerializeField] private float m_gravity;
         [SerializeField] private float m_maxJumpSpeed;
 
+        [SerializeField] private bool m_activateJump;
+
+
+        // Roll
         [SerializeField] private float m_rollSpeed;
 
+        [SerializeField] private bool m_activateRoll;
+
+
+        // Crouch
         [SerializeField] private float m_crouchSpeed;
 
         [SerializeField] private float m_crouchHeight, m_standHeight;
         [SerializeField] private float m_crouchCenter, m_standCenter;
 
+        [SerializeField] private bool m_activateCrouch;
+
+        // Swim
         [SerializeField] private float m_swimSpeed;
         [SerializeField] private float m_buoyantForce;
+
+        [SerializeField] private bool m_activateSwim;
 
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
@@ -129,7 +145,7 @@ namespace ThirdPersonTemplate
 
         public void Jump()
         {
-            if (m_isJumping || m_isFalling || !m_canJump)
+            if (!m_activateJump || m_isJumping || m_isFalling || !m_canJump)
                 return;
 
             m_isJumping = true;
@@ -139,7 +155,7 @@ namespace ThirdPersonTemplate
 
         public void Roll(Vector3 rollDirection, Transform camera = null)
         {
-            if (m_isJumping || m_isFalling)
+            if (!m_activateRoll || m_isJumping || m_isFalling)
                 return;
 
             Vector3 dir;
@@ -246,6 +262,10 @@ namespace ThirdPersonTemplate
 
         public void CrouchStand()
         {
+
+            if (!m_activateCrouch) 
+                return;
+
             if (!m_isCrouched)
             {
                 bool val = Stand();
@@ -258,7 +278,7 @@ namespace ThirdPersonTemplate
 
         public void ChangeCrouchStandState()
         {
-            if (m_isJumping || m_isFalling)
+            if (!m_activateCrouch || m_isJumping || m_isFalling)
                 return;
 
 
@@ -271,6 +291,9 @@ namespace ThirdPersonTemplate
 
         public void OnStartSwimming()
         {
+            if (!m_activateSwim) 
+                return;
+
             m_isSwimming = true;
             m_Animator.SetBool(m_animIDSwimming, m_isSwimming);
             Debug.Log("Start swimming");
@@ -278,7 +301,6 @@ namespace ThirdPersonTemplate
 
         public void ApplySwimForces()
         {
-            m_verticalSpeed += (m_gravity + .1f) * Time.deltaTime;
         }
 
         public void OnStopSwimming()
@@ -286,6 +308,7 @@ namespace ThirdPersonTemplate
             m_isSwimming = false;
             m_Animator.SetBool(m_animIDSwimming, m_isSwimming);
             Debug.Log("Stop swimming");
+            m_verticalSpeed += (m_gravity + .1f) * Time.deltaTime;
         }
 
         public void SetCharacterControllerHeightCenter()

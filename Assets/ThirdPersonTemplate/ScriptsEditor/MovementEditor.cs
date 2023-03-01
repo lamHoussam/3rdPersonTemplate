@@ -10,6 +10,7 @@ namespace ThirdPersonTemplate
         private SerializedProperty spWalkSpeed;
         private SerializedProperty spAcceleration;
 
+
         private SerializedProperty spRotationSmoothTime;
 
         private SerializedProperty spJumpForce;
@@ -22,6 +23,12 @@ namespace ThirdPersonTemplate
 
         private SerializedProperty spCrouchHeight, spCrouchCenter;
         private SerializedProperty spStandHeight, spStandCenter;
+
+
+        private SerializedProperty spActivateJump;
+        private SerializedProperty spActivateRoll;
+        private SerializedProperty spActivateCrouch;
+        private SerializedProperty spActivateSwim;
 
         private void OnEnable()
         {
@@ -42,6 +49,13 @@ namespace ThirdPersonTemplate
             spCrouchCenter = serializedObject.FindProperty("m_crouchCenter");
             spStandHeight = serializedObject.FindProperty("m_standHeight");
             spStandCenter = serializedObject.FindProperty("m_standCenter");
+
+
+
+            spActivateJump = serializedObject.FindProperty("m_activateJump");
+            spActivateCrouch = serializedObject.FindProperty("m_activateCrouch");
+            spActivateRoll = serializedObject.FindProperty("m_activateRoll");
+            spActivateSwim = serializedObject.FindProperty("m_ativateSwim");
         }
 
         public override void OnInspectorGUI()
@@ -76,11 +90,15 @@ namespace ThirdPersonTemplate
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Jump", EditorStyles.boldLabel);
 
-            using (new EditorGUI.IndentLevelScope())
+            EditorGUILayout.PropertyField(spActivateJump);
+            if (spActivateJump.boolValue)
             {
-                EditorGUILayout.PropertyField(spJumpForce);
-                EditorGUILayout.PropertyField(spGravity);
-                EditorGUILayout.PropertyField(spMaxJumpSpeed);
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUILayout.PropertyField(spJumpForce);
+                    EditorGUILayout.PropertyField(spGravity);
+                    EditorGUILayout.PropertyField(spMaxJumpSpeed);
+                }
             }
 
             EditorGUILayout.EndVertical();
@@ -89,9 +107,14 @@ namespace ThirdPersonTemplate
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Roll", EditorStyles.boldLabel);
 
-            using (new EditorGUI.IndentLevelScope())
+            EditorGUILayout.PropertyField(spActivateRoll);
+
+            if(spActivateRoll.boolValue)
             {
-                EditorGUILayout.PropertyField(spRollSpeed);
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUILayout.PropertyField(spRollSpeed);
+                }
             }
 
             EditorGUILayout.EndVertical();
@@ -100,16 +123,22 @@ namespace ThirdPersonTemplate
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Crouch", EditorStyles.boldLabel);
 
-            using (new EditorGUI.IndentLevelScope())
-            {
-                EditorGUILayout.PropertyField(spCrouchSpeed);
+            EditorGUILayout.PropertyField(spActivateCrouch);
 
-                EditorGUILayout.Space();
-                EditorGUILayout.PropertyField(spCrouchHeight);
-                EditorGUILayout.PropertyField(spCrouchCenter);
-                EditorGUILayout.PropertyField(spStandHeight);
-                EditorGUILayout.PropertyField(spStandCenter);
+            if (spActivateCrouch.boolValue)
+            {
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUILayout.PropertyField(spCrouchSpeed);
+
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(spCrouchHeight);
+                    EditorGUILayout.PropertyField(spCrouchCenter);
+                    EditorGUILayout.PropertyField(spStandHeight);
+                    EditorGUILayout.PropertyField(spStandCenter);
+                }
             }
+
 
             EditorGUILayout.EndVertical();
 
