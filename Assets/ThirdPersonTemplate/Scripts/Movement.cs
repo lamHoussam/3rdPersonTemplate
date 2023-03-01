@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -40,6 +41,9 @@ namespace ThirdPersonTemplate
 
         [SerializeField] private bool m_activateSwim;
 
+        // Cover
+        [SerializeField] private float m_inCoverSpeed;
+
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
 
@@ -49,6 +53,9 @@ namespace ThirdPersonTemplate
         private bool m_canMove, m_canJump;
         private bool m_isRolling;
         private bool m_isSwimming;
+
+        private bool m_inCover;
+        public bool InCover => m_inCover;
 
         private bool m_isCrouched;
         public bool IsCrouched => m_isCrouched;
@@ -62,6 +69,7 @@ namespace ThirdPersonTemplate
         private static readonly int m_animIDRoll = Animator.StringToHash("Roll");
         private static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
         private static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
+        private static readonly int m_animIDInCover = Animator.StringToHash("InCover");
         #endregion
 
         private CharacterController m_CharacterController;
@@ -101,11 +109,26 @@ namespace ThirdPersonTemplate
             Rotate(direction, out Vector3 finalDirection, camera);
 
             m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_walkSpeed;
+            m_targetSpeed = InCover ? m_inCoverSpeed : m_targetSpeed;
             m_targetSpeed = isRunning ? m_speed : m_targetSpeed;
             m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_targetSpeed;
 
             m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
 
+
+            if (InCover)
+            {
+
+                
+                float val = finalDirection.x == 0 ? 0 : -Mathf.Sign(finalDirection.x);
+                Vector3 movement = m_currentSpeed * Time.deltaTime * val * transform.right + m_verticalSpeed * Time.deltaTime * Vector3.up;
+                Debug.DrawRay(transform.position, movement, Color.yellow, 10);
+                m_CharacterController.Move(movement);
+
+                m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
+
+                return;
+            }
 
             if (m_isSwimming)
             {
@@ -130,6 +153,12 @@ namespace ThirdPersonTemplate
 
             if (!m_canMove)
                 return;
+
+            if (InCover)
+            {
+                finalDirection = inpDirection;
+                return;
+            }
 
             if (inpDirection != Vector3.zero)
             {
@@ -309,6 +338,34 @@ namespace ThirdPersonTemplate
             m_Animator.SetBool(m_animIDSwimming, m_isSwimming);
             Debug.Log("Stop swimming");
             m_verticalSpeed += (m_gravity + .1f) * Time.deltaTime;
+        }
+
+
+        public void TakeCover()
+        {
+            if (m_inCover || !m_PlayerRaycaster.CanTakeCover(out float angle, out _, out Vector3 point))
+                return;
+
+            m_inCover = true;
+            m_Animator.SetBool(m_animIDInCover, InCover);
+
+            Debug.LogWarning("Angle Value : " + angle);
+            Vector3 direction = (transform.position - point).normalized;
+            Vector3 coverPosition = point + direction * m_CharacterController.radius * 1.1f;
+
+            transform.position = coverPosition;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180));
+
+            //transform.SetPositionAndRotation(coverPosition, Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180)));
+        }
+
+        public void LeaveCover()
+        {
+            if (!m_inCover) 
+                return;
+
+            m_inCover = false;
+            m_Animator.SetBool(m_animIDInCover, m_inCover);
         }
 
         public void SetCharacterControllerHeightCenter()

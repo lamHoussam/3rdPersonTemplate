@@ -25,6 +25,8 @@ namespace ThirdPersonTemplate
         private SerializedProperty spStandHeight, spStandCenter;
 
 
+        private SerializedProperty spInCoverSpeed;
+
         private SerializedProperty spActivateJump;
         private SerializedProperty spActivateRoll;
         private SerializedProperty spActivateCrouch;
@@ -50,6 +52,7 @@ namespace ThirdPersonTemplate
             spStandHeight = serializedObject.FindProperty("m_standHeight");
             spStandCenter = serializedObject.FindProperty("m_standCenter");
 
+            spInCoverSpeed = serializedObject.FindProperty("m_inCoverSpeed");
 
 
             spActivateJump = serializedObject.FindProperty("m_activateJump");
@@ -140,6 +143,17 @@ namespace ThirdPersonTemplate
             }
 
 
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUILayout.LabelField("Cover", EditorStyles.boldLabel);
+
+            //EditorGUILayout.Prop
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(spInCoverSpeed);
+            }
             EditorGUILayout.EndVertical();
 
 

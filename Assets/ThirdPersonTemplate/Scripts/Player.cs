@@ -59,6 +59,16 @@ namespace ThirdPersonTemplate
                 m_Input.switchShoulder = false;
             }
 
+            if (m_Input.cover)
+            {
+                if (m_Movement.InCover)
+                    m_Movement.LeaveCover();
+                else
+                    m_Movement.TakeCover();
+
+                m_Input.cover = false;
+            }
+
         }
     }
 }
