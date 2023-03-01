@@ -1,7 +1,5 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.LightAnchor;
 
 namespace ThirdPersonTemplate
 {
@@ -23,6 +21,9 @@ namespace ThirdPersonTemplate
         [SerializeField] private float m_crouchHeight, m_standHeight;
         [SerializeField] private float m_crouchCenter, m_standCenter;
 
+        [SerializeField] private float m_swimSpeed;
+        [SerializeField] private float m_buoyantForce;
+
         private float m_currentSpeed, m_targetSpeed;
         private float m_targetRotation, m_rotationVelocity;
 
@@ -31,6 +32,7 @@ namespace ThirdPersonTemplate
         private bool m_isJumping, m_isFalling;
         private bool m_canMove, m_canJump;
         private bool m_isRolling;
+        private bool m_isSwimming;
 
         private bool m_isCrouched;
         public bool IsCrouched => m_isCrouched;
@@ -43,6 +45,7 @@ namespace ThirdPersonTemplate
         private static readonly int m_animIDIsFalling = Animator.StringToHash("IsFalling");
         private static readonly int m_animIDRoll = Animator.StringToHash("Roll");
         private static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
+        private static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
         #endregion
 
         private CharacterController m_CharacterController;
@@ -87,6 +90,16 @@ namespace ThirdPersonTemplate
 
             m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
 
+
+            if (m_isSwimming)
+            {
+                Vector3 movement = m_currentSpeed * Time.deltaTime * finalDirection + m_verticalSpeed * Time.deltaTime * Vector3.up;
+                m_CharacterController.Move(movement);
+                Debug.LogError(movement);
+
+                return;
+            }
+
             m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
 
             if (!m_isFalling && !m_isJumping)
@@ -97,7 +110,7 @@ namespace ThirdPersonTemplate
 
         public void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
         {
-            finalDirection = (m_isJumping || m_isFalling) ? m_planeMoveDirection : Vector3.zero;
+            finalDirection = (m_isJumping || m_isFalling) && !m_isSwimming ? m_planeMoveDirection : Vector3.zero;
 
             if (!m_canMove)
                 return;
@@ -203,7 +216,8 @@ namespace ThirdPersonTemplate
             else 
                 m_verticalSpeed = -0.1f;
 
-            m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
+            if (m_Animator.GetBool(m_animIDIsFalling) != m_isFalling)
+                m_Animator.SetBool(m_animIDIsFalling, m_isFalling);
         }
 
 
@@ -255,6 +269,25 @@ namespace ThirdPersonTemplate
 
         }
 
+        public void OnStartSwimming()
+        {
+            m_isSwimming = true;
+            m_Animator.SetBool(m_animIDSwimming, m_isSwimming);
+            Debug.Log("Start swimming");
+        }
+
+        public void ApplySwimForces()
+        {
+            m_verticalSpeed += (m_gravity + .1f) * Time.deltaTime;
+        }
+
+        public void OnStopSwimming()
+        {
+            m_isSwimming = false;
+            m_Animator.SetBool(m_animIDSwimming, m_isSwimming);
+            Debug.Log("Stop swimming");
+        }
+
         public void SetCharacterControllerHeightCenter()
         {
             if(m_isRolling || m_isCrouched)
@@ -295,6 +328,8 @@ namespace ThirdPersonTemplate
         private void Update()
         {
             Gravity();
+            if (m_isSwimming) 
+                ApplySwimForces();
             ManageRoll();
         }
     }
