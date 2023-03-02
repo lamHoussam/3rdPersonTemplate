@@ -32,7 +32,7 @@ namespace ThirdPersonTemplate
 
         private void Start()
         {
-            Activate();
+            //Activate();
         }
 
         public void MoveToNextInstruction()
@@ -48,6 +48,14 @@ namespace ThirdPersonTemplate
             {
                 CurrentInstruction.OnStartInstruction();
                 m_TutorialText.text = m_CurrentInstruction.Desctiption;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.TryGetComponent(out Player player))
+            {
+                Activate();
             }
         }
     }

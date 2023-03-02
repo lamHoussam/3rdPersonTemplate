@@ -198,7 +198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 88748176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5467a981adbaef4691d799e431f1bf6, type: 3}
+  m_Script: {fileID: 11500000, guid: 11f07ccd47866f14e91164a2b26b8c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_description: Use [C] to crouch
@@ -2124,6 +2124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1109309579}
   - component: {fileID: 1109309580}
+  - component: {fileID: 1109309581}
   m_Layer: 0
   m_Name: TutorialInstructions
   m_TagString: Untagged
@@ -2139,7 +2140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1109309578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 14.38, y: 1.88, z: 11.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2163,6 +2164,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TutorialText: {fileID: 229715347}
   m_HeadInstruction: {fileID: 1544731955}
+--- !u!65 &1109309581
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109309578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1125131224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,7 +2855,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1477897699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2afc7438bb88ae744a41fb52099607e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 11f07ccd47866f14e91164a2b26b8c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_description: Use [SPACE] to jump
@@ -3086,7 +3100,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1544731953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3b221ecd9ad3443b90668422bd22cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 11f07ccd47866f14e91164a2b26b8c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_description: Use [WASD] to move

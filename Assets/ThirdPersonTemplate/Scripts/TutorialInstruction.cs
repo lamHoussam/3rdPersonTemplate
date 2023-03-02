@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThirdPersonTemplate
 {
-    public abstract class TutorialInstruction : MonoBehaviour
+    public class TutorialInstruction : MonoBehaviour
     {
         [SerializeField] private string m_description;
         public string Desctiption => m_description;
