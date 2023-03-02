@@ -1,5 +1,6 @@
 using CameraSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ThirdPersonTemplate
 {
@@ -15,6 +16,8 @@ namespace ThirdPersonTemplate
 
         private bool m_rightShoulder;
         private bool m_isAiming;
+
+        public UnityEvent m_OnMove, m_OnJump, m_OnCrouch;
 
         public override void Awake()
         {

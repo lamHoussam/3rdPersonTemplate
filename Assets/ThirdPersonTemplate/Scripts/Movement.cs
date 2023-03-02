@@ -76,12 +76,14 @@ namespace ThirdPersonTemplate
         private Animator m_Animator;
 
         private PlayerRaycaster m_PlayerRaycaster;
+        private Player m_Player;
 
         private void Awake()
         {
             m_CharacterController = GetComponent<CharacterController>();
             m_Animator = GetComponentInChildren<Animator>();
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
+            m_Player = GetComponent<Player>();
 
             m_currentSpeed = m_targetSpeed = 0;
             m_isFalling = false;
@@ -142,7 +144,15 @@ namespace ThirdPersonTemplate
             if (!m_isFalling && !m_isJumping)
                 m_planeMoveDirection = finalDirection;
 
-            m_CharacterController.Move(m_currentSpeed * Time.deltaTime * m_planeMoveDirection + m_verticalSpeed * Time.deltaTime * Vector3.up);
+            Vector3 horizontalMotion = m_currentSpeed * Time.deltaTime * m_planeMoveDirection;
+            m_CharacterController.Move(horizontalMotion + m_verticalSpeed * Time.deltaTime * Vector3.up);
+
+            if (m_Player.m_OnMove != null && horizontalMotion != Vector3.zero)
+            {
+                m_Player.m_OnMove?.Invoke();
+                m_Player.m_OnMove = null;
+                //m_Player.m_OnMove.RemoveAllListeners();
+            }
         }
 
         public void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
@@ -177,6 +187,11 @@ namespace ThirdPersonTemplate
 
             m_isJumping = true;
             //m_isFalling = false;
+            if(m_Player.m_OnJump != null)
+            {
+                m_Player.m_OnJump.Invoke();
+                m_Player.m_OnJump = null;
+            }
             m_Animator.SetTrigger(m_animIDJump);
         }
 
@@ -284,6 +299,11 @@ namespace ThirdPersonTemplate
             DeactivateMovement();
 
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+            if(m_Player.m_OnCrouch != null)
+            {
+                m_Player.m_OnCrouch?.Invoke();
+                m_Player.m_OnCrouch = null;
+            }
             SetCharacterControllerHeightCenter();
         }
 

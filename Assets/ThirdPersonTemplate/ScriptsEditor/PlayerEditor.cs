@@ -15,6 +15,8 @@ namespace ThirdPersonTemplate
 
         private SerializedProperty spAimCameraSettings;
 
+        private SerializedProperty spOnMove, spOnJump, spOnCrouch;
+
         private void OnEnable()
         {
             spStandCameraSettings = serializedObject.FindProperty("m_StandCameraSettings");
@@ -24,6 +26,10 @@ namespace ThirdPersonTemplate
             spRightCameraSettings = serializedObject.FindProperty("m_RightCameraSettings");
 
             spAimCameraSettings = serializedObject.FindProperty("m_AimCameraSettings");
+
+            spOnMove = serializedObject.FindProperty("m_OnMove");
+            spOnJump = serializedObject.FindProperty("m_OnJump");
+            spOnCrouch = serializedObject.FindProperty("m_OnCrouch");
         }
 
 
@@ -48,6 +54,18 @@ namespace ThirdPersonTemplate
 
             EditorGUILayout.EndVertical();
 
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUILayout.LabelField("Player Events", EditorStyles.boldLabel);
+
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(spOnMove);
+                EditorGUILayout.PropertyField(spOnJump);
+                EditorGUILayout.PropertyField(spOnCrouch);
+            }
+
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }

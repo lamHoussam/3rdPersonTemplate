@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+ 
+namespace ThirdPersonTemplate
+{
+    public class #SCRIPTNAME# : TutorialInstruction
+    {
+        #region Members
+        #endregion Members
+		
+        public override void OnCompleteInstruction()
+        {
+            #NOTRIM#
+            base.OnCompleteInstruction();
+        }
+        
+        public override void OnStartInstruction()
+        {
+            base.OnStartInstruction();
+            #NOTRIM#
+        }
+    }
+}
