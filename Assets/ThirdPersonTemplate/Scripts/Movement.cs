@@ -118,8 +118,6 @@ namespace ThirdPersonTemplate
 
             if (InCover)
             {
-
-                
                 float val = finalDirection.x == 0 ? 0 : -Mathf.Sign(finalDirection.x);
                 Vector3 movement = m_currentSpeed * Time.deltaTime * val * transform.right + m_verticalSpeed * Time.deltaTime * Vector3.up;
                 Debug.DrawRay(transform.position, movement, Color.yellow, 10);

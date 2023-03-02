@@ -7,12 +7,14 @@ namespace ThirdPersonTemplate
     {
         private InputAsset m_Input;
         private CameraController m_Camera;
+        private PlayerRaycaster m_PlayerRaycaster;
 
         [SerializeField] private CameraSettings m_StandCameraSettings, m_CrouchCameraSettings;
         [SerializeField] private CameraSettings m_LeftCameraSettings, m_RightCameraSettings;
+        [SerializeField] private CameraSettings m_AimCameraSettings;
 
         private bool m_rightShoulder;
-
+        private bool m_isAiming;
 
         public override void Awake()
         {
@@ -20,8 +22,10 @@ namespace ThirdPersonTemplate
 
             m_Input = GetComponent<InputAsset>();
             m_Camera = Camera.main.GetComponent<CameraController>();
+            m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
             m_rightShoulder = true;
+
         }
 
         private void Update()
@@ -68,6 +72,25 @@ namespace ThirdPersonTemplate
 
                 m_Input.cover = false;
             }
+
+            if (m_Input.aim)
+            {
+                m_isAiming = !m_isAiming;
+
+                m_Input.aim = false;
+                m_Camera.BlendBetweenCameraSettings(m_isAiming ? m_AimCameraSettings : m_StandCameraSettings);
+            }
+
+            if (m_Input.fire)
+            {
+                m_PlayerRaycaster.Fire();
+                m_Input.fire = false;
+            }
+
+            //if (m_isAiming)
+            //{
+
+            //}
 
         }
     }

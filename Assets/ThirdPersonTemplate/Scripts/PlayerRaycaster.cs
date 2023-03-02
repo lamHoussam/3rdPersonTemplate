@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ThirdPersonTemplate
@@ -15,6 +12,10 @@ namespace ThirdPersonTemplate
         [SerializeField] private Transform m_CoverRaycastOrigin;
         [SerializeField] private float m_CanTakeCoverDistance;
         [SerializeField] private LayerMask m_CoverLayer;
+
+        [Space]
+        [SerializeField] private Transform m_Eyes;
+        [SerializeField] private float m_FireDistance;
 
         public bool CanStand()
         {
@@ -45,6 +46,23 @@ namespace ThirdPersonTemplate
             return false;
         }
 
+        // TODO: Optimise
+        public void Fire()
+        {
+            Vector2 centerPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = Camera.main.ScreenPointToRay(centerPoint);
+            Vector3 point = ray.origin + ray.direction * m_FireDistance;
+            Ray fireRay = new Ray(m_Eyes.position, (point - m_Eyes.position).normalized);
+
+            if(Physics.Raycast(fireRay, out RaycastHit hit, m_FireDistance))
+            {
+                Vector3 dir = (hit.point - m_Eyes.position).normalized;
+
+                Debug.Log("Change direction");
+                Debug.DrawRay(fireRay.origin, dir * m_FireDistance, Color.green, 20);
+            }
+
+        }
 
     }
 }

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
@@ -12,6 +13,10 @@ namespace CameraSystem
     {
         private SerializedProperty spTarget;
         private SerializedProperty spDistance;
+
+
+        // Values
+        private SerializedProperty spCameraSettingsToLoad;
         private SerializedProperty spOffset;
         private SerializedProperty spCameraLerpTime;
 
@@ -40,6 +45,8 @@ namespace CameraSystem
             spDistance = serializedObject.FindProperty("m_distance");
             spOffset = serializedObject.FindProperty("m_offset");
             spCameraLerpTime = serializedObject.FindProperty("m_cameraLerpTime");
+
+            spCameraSettingsToLoad = serializedObject.FindProperty("m_CameraSettingsToLoad");
 
             spAssetName = serializedObject.FindProperty("m_assetName");
             spAssetPath = serializedObject.FindProperty("m_assetPath");
@@ -81,6 +88,10 @@ namespace CameraSystem
 
             using (new EditorGUI.IndentLevelScope())
             {
+                EditorGUILayout.PropertyField(spCameraSettingsToLoad);
+                if(GUILayout.Button("Load Camera Settings"))
+                    LoadCameraSettings();
+
                 EditorGUILayout.PropertyField(spDistance);
                 EditorGUILayout.PropertyField(spOffset);
                 EditorGUILayout.PropertyField(spCameraLerpTime);
@@ -174,6 +185,18 @@ namespace CameraSystem
 
             Selection.activeObject = asset;
 
+        }
+
+        public void LoadCameraSettings()
+        {
+            CameraSettings settings = spCameraSettingsToLoad.objectReferenceValue as CameraSettings;
+
+            if (!settings)
+                return;
+
+            spDistance.floatValue = settings.Distance;
+            spOffset.vector2Value = settings.Offset;
+            spCameraLerpTime.floatValue = settings.CameraLerpTime;
         }
     }
 }

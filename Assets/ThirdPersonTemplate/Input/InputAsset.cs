@@ -15,6 +15,8 @@ namespace ThirdPersonTemplate
         public bool sprint;
         public bool switchShoulder;
         public bool cover;
+        public bool aim;
+        public bool fire;
 
         private void OnMove(InputValue value)
         {
@@ -54,6 +56,16 @@ namespace ThirdPersonTemplate
         private void OnCover(InputValue value)
         {
             cover = value.isPressed;
+        }
+
+        private void OnAim(InputValue value)
+        {
+            aim = value.isPressed;
+        }
+
+        private void OnFire(InputValue value)
+        {
+            fire = value.isPressed;
         }
     }
 }
