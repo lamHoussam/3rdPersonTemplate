@@ -19,6 +19,8 @@ namespace ThirdPersonTemplate
 
         public UnityEvent m_OnMove, m_OnJump, m_OnCrouch;
 
+        private IInteractable m_NearInteractable;
+
         public override void Awake()
         {
             base.Awake();
@@ -41,6 +43,7 @@ namespace ThirdPersonTemplate
             if (m_Input.jump)
             {
                 m_Movement.Jump();
+
                 m_Input.jump = false;
             }
 
@@ -90,11 +93,36 @@ namespace ThirdPersonTemplate
                 m_Input.fire = false;
             }
 
+            if(m_NearInteractable != null && m_Input.interact)
+            {
+                m_NearInteractable.OnInteract(this);
+                m_Input.interact = false;
+            }
+
             //if (m_isAiming)
             //{
 
             //}
 
+        }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.TryGetComponent(out IInteractable interactable))
+            {
+                m_NearInteractable = interactable;
+                m_NearInteractable.OnBeginOverlap(this);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out IInteractable _))
+            {
+                m_NearInteractable.OnEndOverlap(this);
+                m_NearInteractable = null;
+            }
         }
     }
 }

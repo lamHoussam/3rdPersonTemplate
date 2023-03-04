@@ -14,7 +14,9 @@ namespace ThirdPersonTemplate
 
         public virtual void OnCompleteInstruction()
         {
-            GetComponentInParent<Tutorial>().MoveToNextInstruction();
+            Tutorial tutorial = GetComponentInParent<Tutorial>();
+            if (this == tutorial.CurrentInstruction)
+                tutorial.MoveToNextInstruction();
         }
 
         public virtual void OnStartInstruction()

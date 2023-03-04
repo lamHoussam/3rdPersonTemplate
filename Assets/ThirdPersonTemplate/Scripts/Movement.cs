@@ -70,6 +70,7 @@ namespace ThirdPersonTemplate
         private static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
         private static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
         private static readonly int m_animIDInCover = Animator.StringToHash("InCover");
+        private static readonly int m_animIDClimb = Animator.StringToHash("Climb");
         #endregion
 
         private CharacterController m_CharacterController;
@@ -150,7 +151,7 @@ namespace ThirdPersonTemplate
             if (m_Player.m_OnMove != null && horizontalMotion != Vector3.zero)
             {
                 m_Player.m_OnMove?.Invoke();
-                m_Player.m_OnMove = null;
+                //m_Player.m_OnMove = null;
                 //m_Player.m_OnMove.RemoveAllListeners();
             }
         }
@@ -190,7 +191,7 @@ namespace ThirdPersonTemplate
             if(m_Player.m_OnJump != null)
             {
                 m_Player.m_OnJump.Invoke();
-                m_Player.m_OnJump = null;
+                //m_Player.m_OnJump = null;
             }
             m_Animator.SetTrigger(m_animIDJump);
         }
@@ -302,7 +303,7 @@ namespace ThirdPersonTemplate
             if(m_Player.m_OnCrouch != null)
             {
                 m_Player.m_OnCrouch?.Invoke();
-                m_Player.m_OnCrouch = null;
+                //m_Player.m_OnCrouch = null;
             }
             SetCharacterControllerHeightCenter();
         }
@@ -402,6 +403,11 @@ namespace ThirdPersonTemplate
                 m_CharacterController.center = new Vector3(center.x, m_standCenter, center.z);
             }
         }
+
+        //public void Climb()
+        //{
+        //    m_Animator.SetTrigger(m_animIDClimb);
+        //}
 
         public void DeactivateMovement()
         {

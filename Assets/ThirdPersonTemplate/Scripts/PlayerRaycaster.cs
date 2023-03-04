@@ -1,14 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ThirdPersonTemplate
 {
     public class PlayerRaycaster : MonoBehaviour
     {
+        // Can stand Raycasts values
         [SerializeField] private Transform m_CanStandRaycastOrigin;
         [SerializeField] private float m_CanStandDistance;
 
-        [Space]
 
+        // Cover Raycasts values
+        [Space]
         [SerializeField] private Transform m_CoverRaycastOrigin;
         [SerializeField] private float m_CanTakeCoverDistance;
         [SerializeField] private LayerMask m_CoverLayer;
@@ -16,6 +19,11 @@ namespace ThirdPersonTemplate
         [Space]
         [SerializeField] private Transform m_Eyes;
         [SerializeField] private float m_FireDistance;
+
+        [Space]
+        [SerializeField] private Transform m_ClimbRaycastOrigin;
+        [SerializeField] private float m_CanClimbDistance;
+        [SerializeField] private LayerMask m_ClimbLayer; 
 
         public bool CanStand()
         {
@@ -64,5 +72,13 @@ namespace ThirdPersonTemplate
 
         }
 
+
+        public bool CanClimb()
+        {
+            Ray ray = new Ray(m_ClimbRaycastOrigin.position, transform.forward);
+
+            Debug.DrawRay(ray.origin, ray.direction * m_CanClimbDistance, Color.blue, 10);
+            return Physics.Raycast(ray, m_CanClimbDistance, m_ClimbLayer);
+        }
     }
 }

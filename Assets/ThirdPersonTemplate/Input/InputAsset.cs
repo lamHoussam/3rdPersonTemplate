@@ -18,6 +18,8 @@ namespace ThirdPersonTemplate
         public bool aim;
         public bool fire;
 
+        public bool interact;
+
         private void OnMove(InputValue value)
         {
             move = value.Get<Vector2>();
@@ -66,6 +68,11 @@ namespace ThirdPersonTemplate
         private void OnFire(InputValue value)
         {
             fire = value.isPressed;
+        }
+
+        private void OnInteract(InputValue value)
+        {
+            interact = value.isPressed;
         }
     }
 }
