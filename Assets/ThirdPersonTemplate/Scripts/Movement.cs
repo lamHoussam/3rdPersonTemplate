@@ -100,7 +100,7 @@ namespace ThirdPersonTemplate
             m_planeMoveDirection = Vector2.zero;
         }
 
-        public void Move(Vector3 direction, bool isRunning = false, Transform camera = null)
+        public virtual void Move(Vector3 direction, bool isRunning = false, Transform camera = null)
         {
             if (!m_canMove)
             {
@@ -156,7 +156,7 @@ namespace ThirdPersonTemplate
             }
         }
 
-        public void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
+        public virtual void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
         {
             finalDirection = (m_isJumping || m_isFalling) && !m_isSwimming ? m_planeMoveDirection : Vector3.zero;
 
