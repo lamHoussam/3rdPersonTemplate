@@ -11,7 +11,7 @@ namespace ThirdPersonTemplate
         private PlayerRaycaster m_PlayerRaycaster;
 
         private bool m_rightShoulder;
-        private bool m_isAiming;
+        public bool RightShoulder => m_rightShoulder;
 
         public UnityEvent m_OnMove, m_OnJump, m_OnCrouch;
 
@@ -60,8 +60,7 @@ namespace ThirdPersonTemplate
 
             if (m_Input.switchShoulder)
             {
-                m_rightShoulder = !m_rightShoulder;
-
+                SwitchShoulders();
                 m_Input.switchShoulder = false;
             }
 
@@ -83,6 +82,15 @@ namespace ThirdPersonTemplate
 
         }
 
+        public void SwitchShoulders()
+        {
+            if (m_Movement.InCover)
+                return;
+
+            m_rightShoulder = !m_rightShoulder;
+
+            m_CameraController.GetComponent<CameraLogic>().SwitchCameraSetting(m_rightShoulder ? "rightStand" : "leftStand");
+        }
 
         private void OnTriggerEnter(Collider other)
         {

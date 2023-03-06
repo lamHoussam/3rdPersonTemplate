@@ -315,7 +315,7 @@ namespace ThirdPersonTemplate
             m_isCrouched = false;
 
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
-            m_CameraLogic.SwitchCameraSetting("stand");
+            m_CameraLogic.SwitchCameraSetting(m_Player.RightShoulder ? "rightStand" : "leftStand");
             SetCharacterControllerHeightCenter();
 
             return true;
@@ -418,7 +418,7 @@ namespace ThirdPersonTemplate
 
             m_inCover = false;
             m_Animator.SetBool(m_animIDInCover, m_inCover);
-            m_CameraLogic.SwitchCameraSetting("stand");
+            m_CameraLogic.SwitchCameraSetting(m_Player.RightShoulder ? "rightStand" : "leftStand");
         }
 
         public void SetCharacterControllerHeightCenter()
