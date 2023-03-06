@@ -8,78 +8,78 @@ namespace ThirdPersonTemplate
     {
 
         // Basic Movement
-        [SerializeField] private float m_speed, m_walkSpeed;
-        [SerializeField] private float m_acceleration;
+        [SerializeField] protected float m_speed, m_walkSpeed;
+        [SerializeField] protected float m_acceleration;
 
-        [SerializeField] private float m_rotationSmoothTime;
+        [SerializeField] protected float m_rotationSmoothTime;
 
         // Jump
-        [SerializeField] private float m_jumpForce;
-        [SerializeField] private float m_gravity;
-        [SerializeField] private float m_maxJumpSpeed;
+        [SerializeField] protected float m_jumpForce;
+        [SerializeField] protected float m_gravity;
+        [SerializeField] protected float m_maxJumpSpeed;
 
-        [SerializeField] private bool m_activateJump;
+        [SerializeField] protected bool m_activateJump;
 
 
         // Roll
-        [SerializeField] private float m_rollSpeed;
+        [SerializeField] protected float m_rollSpeed;
 
-        [SerializeField] private bool m_activateRoll;
+        [SerializeField] protected bool m_activateRoll;
 
 
         // Crouch
-        [SerializeField] private float m_crouchSpeed;
+        [SerializeField] protected float m_crouchSpeed;
 
-        [SerializeField] private float m_crouchHeight, m_standHeight;
-        [SerializeField] private float m_crouchCenter, m_standCenter;
+        [SerializeField] protected float m_crouchHeight, m_standHeight;
+        [SerializeField] protected float m_crouchCenter, m_standCenter;
 
-        [SerializeField] private bool m_activateCrouch;
+        [SerializeField] protected bool m_activateCrouch;
 
         // Swim
-        [SerializeField] private float m_swimSpeed;
-        [SerializeField] private float m_buoyantForce;
+        [SerializeField] protected float m_swimSpeed;
+        [SerializeField] protected float m_buoyantForce;
 
-        [SerializeField] private bool m_activateSwim;
+        [SerializeField] protected bool m_activateSwim;
 
         // Cover
-        [SerializeField] private float m_inCoverSpeed;
+        [SerializeField] protected float m_inCoverSpeed;
 
-        private float m_currentSpeed, m_targetSpeed;
-        private float m_targetRotation, m_rotationVelocity;
+        protected float m_currentSpeed, m_targetSpeed;
+        protected float m_targetRotation, m_rotationVelocity;
 
-        private float m_verticalSpeed;
+        protected float m_verticalSpeed;
 
-        private bool m_isJumping, m_isFalling;
-        private bool m_canMove, m_canJump;
-        private bool m_isRolling;
-        private bool m_isSwimming;
+        protected bool m_isJumping, m_isFalling;
+        protected bool m_canMove, m_canJump;
+        protected bool m_isRolling;
+        protected bool m_isSwimming;
 
-        private bool m_inCover;
+        protected bool m_inCover;
         public bool InCover => m_inCover;
 
-        private bool m_isCrouched;
+        protected bool m_isCrouched;
         public bool IsCrouched => m_isCrouched;
 
-        private Vector3 m_planeMoveDirection;
+        protected Vector3 m_planeMoveDirection;
 
         #region Animation IDs
-        private static readonly int m_animIDSpeed = Animator.StringToHash("Speed");
-        private static readonly int m_animIDJump = Animator.StringToHash("Jump");
-        private static readonly int m_animIDIsFalling = Animator.StringToHash("IsFalling");
-        private static readonly int m_animIDRoll = Animator.StringToHash("Roll");
-        private static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
-        private static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
-        private static readonly int m_animIDInCover = Animator.StringToHash("InCover");
-        private static readonly int m_animIDClimb = Animator.StringToHash("Climb");
+        protected static readonly int m_animIDSpeed = Animator.StringToHash("Speed");
+        protected static readonly int m_animIDJump = Animator.StringToHash("Jump");
+        protected static readonly int m_animIDIsFalling = Animator.StringToHash("IsFalling");
+        protected static readonly int m_animIDRoll = Animator.StringToHash("Roll");
+        protected static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
+        protected static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
+        protected static readonly int m_animIDInCover = Animator.StringToHash("InCover");
+        protected static readonly int m_animIDClimb = Animator.StringToHash("Climb");
         #endregion
 
-        private CharacterController m_CharacterController;
-        private Animator m_Animator;
+        protected CharacterController m_CharacterController;
+        protected Animator m_Animator;
 
-        private PlayerRaycaster m_PlayerRaycaster;
-        private Player m_Player;
+        protected PlayerRaycaster m_PlayerRaycaster;
+        protected Player m_Player;
 
-        private void Awake()
+        public virtual void Awake()
         {
             m_CharacterController = GetComponent<CharacterController>();
             m_Animator = GetComponentInChildren<Animator>();
