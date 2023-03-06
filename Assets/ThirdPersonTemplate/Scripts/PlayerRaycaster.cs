@@ -16,6 +16,8 @@ namespace ThirdPersonTemplate
         [SerializeField] private float m_CanTakeCoverDistance;
         [SerializeField] private LayerMask m_CoverLayer;
 
+        [SerializeField] private Transform m_CoverLeftRayOrigin, m_CoverRightRayOrigin;
+
         [Space]
         [SerializeField] private Transform m_Eyes;
         [SerializeField] private float m_FireDistance;
@@ -52,6 +54,23 @@ namespace ThirdPersonTemplate
             }
 
             return false;
+        }
+
+
+        public bool CanGoRightCover(Vector3 direction)
+        {
+            Ray ray = new Ray(m_CoverRightRayOrigin.position, direction);
+
+            Debug.DrawRay(ray.origin, ray.direction, Color.blue, 20);
+            return Physics.Raycast(ray, m_CanTakeCoverDistance, m_CoverLayer);
+        }
+
+        public bool CanGoLeftCover(Vector3 direction)
+        {
+            Ray ray = new Ray(m_CoverLeftRayOrigin.position, direction);
+
+            Debug.DrawRay(ray.origin, ray.direction, Color.blue, 20);
+            return Physics.Raycast(ray, m_CanTakeCoverDistance, m_CoverLayer);
         }
 
         // TODO: Optimise

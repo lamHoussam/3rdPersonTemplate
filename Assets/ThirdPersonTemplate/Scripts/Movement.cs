@@ -100,6 +100,35 @@ namespace ThirdPersonTemplate
             m_planeMoveDirection = Vector2.zero;
         }
 
+        private void CoverMove(Vector3 direction)
+        {
+            float val = direction.x == 0 ? 0 : -Mathf.Sign(direction.x);
+
+            if (direction.z != 0)
+            {
+                LeaveCover();
+                return;
+            }
+
+            bool checkCanMove = true;
+            if (val > 0)
+                checkCanMove = m_PlayerRaycaster.CanGoLeftCover(-transform.forward);
+            else if (val < 0)
+                checkCanMove = m_PlayerRaycaster.CanGoRightCover(-transform.forward);
+
+            m_targetSpeed = checkCanMove && val != 0 ? m_inCoverSpeed : 0;
+
+            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
+
+            Vector3 movement = m_currentSpeed * Time.deltaTime * val * transform.right + m_verticalSpeed * Time.deltaTime * Vector3.up;
+            Debug.DrawRay(transform.position, movement, Color.yellow, 10);
+            m_CharacterController.Move(movement);
+
+
+            m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
+
+        }
+
         public virtual void Move(Vector3 direction, bool isRunning = false, Transform camera = null)
         {
             if (!m_canMove)
@@ -111,23 +140,11 @@ namespace ThirdPersonTemplate
 
             Rotate(direction, out Vector3 finalDirection, camera);
 
-            m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_walkSpeed;
-            m_targetSpeed = InCover ? m_inCoverSpeed : m_targetSpeed;
-            m_targetSpeed = isRunning ? m_speed : m_targetSpeed;
-            m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_targetSpeed;
-
-            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
 
 
             if (InCover)
             {
-                float val = finalDirection.x == 0 ? 0 : -Mathf.Sign(finalDirection.x);
-                Vector3 movement = m_currentSpeed * Time.deltaTime * val * transform.right + m_verticalSpeed * Time.deltaTime * Vector3.up;
-                Debug.DrawRay(transform.position, movement, Color.yellow, 10);
-                m_CharacterController.Move(movement);
-
-                m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
-
+                CoverMove(finalDirection);
                 return;
             }
 
@@ -139,6 +156,12 @@ namespace ThirdPersonTemplate
 
                 return;
             }
+
+            m_targetSpeed = m_isCrouched ? m_crouchSpeed : m_walkSpeed;
+            m_targetSpeed = isRunning ? m_speed : m_targetSpeed;
+            m_targetSpeed = finalDirection == Vector3.zero ? 0 : m_targetSpeed;
+
+            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_targetSpeed, m_acceleration * Time.deltaTime);
 
             m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
 
@@ -243,14 +266,6 @@ namespace ThirdPersonTemplate
 
         public void Gravity()
         {
-            //if (m_CharacterController.isGrounded)
-            //{
-            //    m_verticalSpeed = 0;
-            //    m_isFalling = false;
-            //    m_isJumping = false;
-            //    m_Animator.SetBool(m_animIDIsFalling, false);
-            //    //return;
-            //}
 
             m_isFalling = !m_CharacterController.isGrounded;
 
@@ -370,7 +385,7 @@ namespace ThirdPersonTemplate
 
             Debug.LogWarning("Angle Value : " + angle);
             Vector3 direction = (transform.position - point).normalized;
-            Vector3 coverPosition = point + direction * m_CharacterController.radius * 1.1f;
+            Vector3 coverPosition = point + 1.1f * m_CharacterController.radius * direction;
 
             transform.position = coverPosition;
             transform.rotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180));

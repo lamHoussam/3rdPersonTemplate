@@ -79,20 +79,6 @@ namespace ThirdPersonTemplate
                 m_Input.cover = false;
             }
 
-            if (m_Input.aim)
-            {
-                m_isAiming = !m_isAiming;
-
-                m_Input.aim = false;
-                m_Camera.BlendBetweenCameraSettings(m_isAiming ? m_AimCameraSettings : m_StandCameraSettings);
-            }
-
-            if (m_Input.fire)
-            {
-                m_PlayerRaycaster.Fire();
-                m_Input.fire = false;
-            }
-
             if(m_NearInteractable != null && m_Input.interact)
             {
                 m_NearInteractable.OnInteract(this);
