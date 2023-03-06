@@ -32,7 +32,7 @@ namespace ThirdPersonTemplate
         private SerializedProperty spActivateCrouch;
         private SerializedProperty spActivateSwim;
 
-        private void OnEnable()
+        public virtual void OnEnable()
         {
             spSpeed = serializedObject.FindProperty("m_speed");
             spWalkSpeed = serializedObject.FindProperty("m_walkSpeed");

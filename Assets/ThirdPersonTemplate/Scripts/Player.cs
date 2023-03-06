@@ -99,11 +99,6 @@ namespace ThirdPersonTemplate
                 m_Input.interact = false;
             }
 
-            //if (m_isAiming)
-            //{
-
-            //}
-
         }
 
 
