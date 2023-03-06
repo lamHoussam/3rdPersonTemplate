@@ -15,3 +15,4 @@ MonoBehaviour:
   m_offset: {x: 1, y: 1.7}
   m_distance: 2
   m_cameraLerpTime: 25
+  m_senstivity: {x: 25, y: 25}

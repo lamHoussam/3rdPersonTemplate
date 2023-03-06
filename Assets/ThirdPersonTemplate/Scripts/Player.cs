@@ -7,12 +7,8 @@ namespace ThirdPersonTemplate
     public class Player : Humanoid
     {
         private InputAsset m_Input;
-        private CameraController m_Camera;
+        private CameraController m_CameraController;
         private PlayerRaycaster m_PlayerRaycaster;
-
-        [SerializeField] private CameraSettings m_StandCameraSettings, m_CrouchCameraSettings;
-        [SerializeField] private CameraSettings m_LeftCameraSettings, m_RightCameraSettings;
-        [SerializeField] private CameraSettings m_AimCameraSettings;
 
         private bool m_rightShoulder;
         private bool m_isAiming;
@@ -26,7 +22,9 @@ namespace ThirdPersonTemplate
             base.Awake();
 
             m_Input = GetComponent<InputAsset>();
-            m_Camera = Camera.main.GetComponent<CameraController>();
+
+            m_CameraController = Camera.main.GetComponent<CameraController>();
+
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
             m_rightShoulder = true;
@@ -36,8 +34,8 @@ namespace ThirdPersonTemplate
         public virtual void Update()
         {
             Vector3 moveDir = new Vector3(m_Input.move.x, 0, m_Input.move.y).normalized;
-            m_Movement.Move(moveDir, m_Input.sprint, m_Camera.transform);
-            m_Camera.SetPitchYaw(m_Input.look);
+            m_Movement.Move(moveDir, m_Input.sprint, m_CameraController.transform);
+            m_CameraController.SetPitchYaw(m_Input.look);
 
 
             if (m_Input.jump)
@@ -49,14 +47,13 @@ namespace ThirdPersonTemplate
 
             if (m_Input.roll)
             {
-                m_Movement.Roll(moveDir, m_Camera.transform);
+                m_Movement.Roll(moveDir, m_CameraController.transform);
                 m_Input.roll = false;
             }
 
             if(m_Input.crouch)
             {
                 m_Movement.ChangeCrouchStandState();
-                m_Camera.BlendBetweenCameraSettings(m_Movement.IsCrouched ? m_CrouchCameraSettings : m_StandCameraSettings);
 
                 m_Input.crouch = false;
             }
@@ -64,7 +61,6 @@ namespace ThirdPersonTemplate
             if (m_Input.switchShoulder)
             {
                 m_rightShoulder = !m_rightShoulder;
-                m_Camera.BlendBetweenCameraSettings(m_rightShoulder ? m_RightCameraSettings : m_LeftCameraSettings);
 
                 m_Input.switchShoulder = false;
             }

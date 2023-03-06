@@ -12,12 +12,12 @@ public class Player : MonoBehaviour
 
     private bool m_crouched;
 
-    private Camera m_Camera;
+    private CameraLogic m_CameraLogic;
     private float m_targetRotation;
     private void Awake()
     {
         m_crouched = false;
-        m_Camera = Camera.main;
+        m_CameraLogic = Camera.main.GetComponent<CameraLogic>();
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         {
             float rotationVelocity = 0;
             m_targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
-                              m_Camera.transform.eulerAngles.y;
+                              m_CameraLogic.transform.eulerAngles.y;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_targetRotation, ref rotationVelocity,
                 RotationSmoothTime);
 
@@ -46,7 +46,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             m_crouched = !m_crouched;
-            m_Camera.GetComponent<CameraController>().BlendBetweenCameraSettings(m_crouched ? m_CrouchSettings : m_StandSettings);
+            m_CameraLogic.SwitchCameraSetting(m_crouched ? "crouch" : "stand");
+            //m_CameraLogic.GetComponent<CameraController>().BlendBetweenCameraSettings(m_crouched ? m_CrouchSettings : m_StandSettings);
         }
 
 

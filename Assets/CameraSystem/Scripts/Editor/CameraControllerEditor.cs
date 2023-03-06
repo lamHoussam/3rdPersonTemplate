@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands.BranchExplorer.Layout;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace CameraSystem
         private SerializedProperty spOffset;
         private SerializedProperty spCameraLerpTime;
 
+        private SerializedProperty spSensitivity;
+
         private SerializedProperty spAssetName, spAssetPath;
 
         private SerializedProperty spActive;
@@ -39,12 +42,17 @@ namespace CameraSystem
 
         private CameraController m_CameraController;
 
+
+        private SerializedProperty spYaw, spPitch;
+        private SerializedProperty spCameraType;
+
         private void OnEnable()
         {
             spTarget = serializedObject.FindProperty("m_Target");
             spDistance = serializedObject.FindProperty("m_distance");
             spOffset = serializedObject.FindProperty("m_offset");
             spCameraLerpTime = serializedObject.FindProperty("m_cameraLerpTime");
+            spSensitivity = serializedObject.FindProperty("m_sensitivity");
 
             spCameraSettingsToLoad = serializedObject.FindProperty("m_CameraSettingsToLoad");
 
@@ -69,6 +77,11 @@ namespace CameraSystem
 
             spTransitionLerpTime = serializedObject.FindProperty("m_transitionLerpTime");
             spTransitionCurve = serializedObject.FindProperty("m_TransitionCurve");
+
+            spYaw = serializedObject.FindProperty("m_yaw");
+            spPitch = serializedObject.FindProperty("m_pitch");
+
+            spCameraType = serializedObject.FindProperty("m_CameraType");
 
             m_CameraController = target as CameraController;
         }
@@ -95,6 +108,7 @@ namespace CameraSystem
                 EditorGUILayout.PropertyField(spDistance);
                 EditorGUILayout.PropertyField(spOffset);
                 EditorGUILayout.PropertyField(spCameraLerpTime);
+                EditorGUILayout.PropertyField(spSensitivity);
 
                 EditorGUILayout.LabelField("Camera Settings", EditorStyles.boldLabel);
                 using (new EditorGUI.IndentLevelScope())
@@ -166,6 +180,12 @@ namespace CameraSystem
 
             if (!Application.isPlaying)
                 m_CameraController.ThirdPersonCamera();
+
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(spCameraType);
+
+            EditorGUILayout.PropertyField(spYaw);
+            EditorGUILayout.PropertyField(spPitch);
 
             serializedObject.ApplyModifiedProperties();
         }

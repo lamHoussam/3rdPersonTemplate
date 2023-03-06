@@ -1,3 +1,4 @@
+using CameraSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -79,12 +80,16 @@ namespace ThirdPersonTemplate
         protected PlayerRaycaster m_PlayerRaycaster;
         protected Player m_Player;
 
+        private CameraLogic m_CameraLogic;
+
         public virtual void Awake()
         {
             m_CharacterController = GetComponent<CharacterController>();
             m_Animator = GetComponentInChildren<Animator>();
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
             m_Player = GetComponent<Player>();
+
+            m_CameraLogic = Camera.main.GetComponent<CameraLogic>();
 
             m_currentSpeed = m_targetSpeed = 0;
             m_isFalling = false;
@@ -112,9 +117,17 @@ namespace ThirdPersonTemplate
 
             bool checkCanMove = true;
             if (val > 0)
+            {
                 checkCanMove = m_PlayerRaycaster.CanGoLeftCover(-transform.forward);
+                if (m_CameraLogic.CurrentState != "coverRight")
+                    m_CameraLogic.SwitchCameraSetting("coverRight");
+            }
             else if (val < 0)
+            {
                 checkCanMove = m_PlayerRaycaster.CanGoRightCover(-transform.forward);
+                if (m_CameraLogic.CurrentState != "coverLeft")
+                    m_CameraLogic.SwitchCameraSetting("coverLeft");
+            }
 
             m_targetSpeed = checkCanMove && val != 0 ? m_inCoverSpeed : 0;
 
@@ -302,6 +315,7 @@ namespace ThirdPersonTemplate
             m_isCrouched = false;
 
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
+            m_CameraLogic.SwitchCameraSetting("stand");
             SetCharacterControllerHeightCenter();
 
             return true;
@@ -315,7 +329,9 @@ namespace ThirdPersonTemplate
             DeactivateMovement();
 
             m_Animator.SetBool(m_animIDCrouch, m_isCrouched);
-            if(m_Player.m_OnCrouch != null)
+            m_CameraLogic.SwitchCameraSetting("crouch");
+
+            if (m_Player.m_OnCrouch != null)
             {
                 m_Player.m_OnCrouch?.Invoke();
                 //m_Player.m_OnCrouch = null;
@@ -380,6 +396,8 @@ namespace ThirdPersonTemplate
             if (m_inCover || !m_PlayerRaycaster.CanTakeCover(out float angle, out _, out Vector3 point))
                 return;
 
+            m_CameraLogic.SwitchCameraSetting("coverLeft");
+
             m_inCover = true;
             m_Animator.SetBool(m_animIDInCover, InCover);
 
@@ -400,6 +418,7 @@ namespace ThirdPersonTemplate
 
             m_inCover = false;
             m_Animator.SetBool(m_animIDInCover, m_inCover);
+            m_CameraLogic.SwitchCameraSetting("stand");
         }
 
         public void SetCharacterControllerHeightCenter()

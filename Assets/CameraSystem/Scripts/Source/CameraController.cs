@@ -6,6 +6,13 @@ namespace CameraSystem
 {
     public class CameraController : MonoBehaviour
     {
+        public enum CameraType
+        {
+            Controllable, 
+            NonControllable,
+        }
+
+
         [SerializeField] private Transform m_Target;
 
         [SerializeField] private float m_distance;
@@ -14,6 +21,8 @@ namespace CameraSystem
         [SerializeField] private string m_assetName, m_assetPath;
 
         [SerializeField] private float m_cameraLerpTime;
+
+        [SerializeField] private Vector2 m_sensitivity;
 
         private float m_targetDistance;
         private Vector3 m_expectedPos, m_realOffset;
@@ -33,6 +42,9 @@ namespace CameraSystem
 
         [SerializeField] private CameraSettings m_CameraSettingsToLoad;
 
+        [SerializeField] private CameraType m_CameraType;
+        public CameraType Type => m_CameraType;
+
         private bool m_isBlending;
 
         private float m_blendDistanceVariation;
@@ -42,11 +54,14 @@ namespace CameraSystem
         private CameraSettings m_TargetSettings;
 
 
-        private float m_yaw, m_pitch;
+        [SerializeField] private float m_yaw, m_pitch;
+
         private void LateUpdate()
         {
             if (!m_Target || !Active) return;
-            SetPitchYaw();
+            if(m_CameraType == CameraType.Controllable)
+                SetPitchYaw();
+
             ThirdPersonCamera();
         }
 
@@ -72,8 +87,8 @@ namespace CameraSystem
 
         public void SetPitchYaw(Vector2 look)
         {
-            m_pitch += look.y;
-            m_yaw += look.x;
+            m_pitch += Time.deltaTime * look.y * m_sensitivity.y;
+            m_yaw += Time.deltaTime * look.x * m_sensitivity.x;
 
             m_pitch = ClampAngle(m_pitch, m_minPitchValue, m_maxPitchValue);
             if (m_useYawLimit)
@@ -81,7 +96,7 @@ namespace CameraSystem
         }
 
         public void SetPitchYaw(float x, float y) => SetPitchYaw(new Vector2(x, y));
-        public void SetPitchYaw() => SetPitchYaw(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"));
+        public void SetPitchYaw() => SetPitchYaw(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         
 
         public void ThirdPersonCamera()
@@ -103,11 +118,12 @@ namespace CameraSystem
                 hor * Mathf.Sin(m_yaw * Mathf.Deg2Rad),
                 m_distance * Mathf.Sin(m_pitch * Mathf.Deg2Rad),
                 hor * Mathf.Cos(m_yaw * Mathf.Deg2Rad)
-            );
+            );  
             Quaternion rot = Quaternion.Euler(/*(Vector3)m_offset + */Vector3.up * m_yaw + Vector3.right * m_pitch);
 
             m_expectedPos = pos;
-
+            
+            // TODO: Change to take direction from player
             Vector3 direction = (pos - m_Target.position).normalized;
 
             Ray ray = new Ray(m_Target.position + m_realOffset, direction);
@@ -149,6 +165,7 @@ namespace CameraSystem
             m_offset = settings.Offset;
             m_distance = settings.Distance;
             m_cameraLerpTime = settings.CameraLerpTime;
+            m_sensitivity = settings.Sensitivity;
             StopBlend();
         }
 
