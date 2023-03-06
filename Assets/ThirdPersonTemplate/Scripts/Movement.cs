@@ -71,6 +71,7 @@ namespace ThirdPersonTemplate
         protected static readonly int m_animIDCrouch = Animator.StringToHash("Crouch");
         protected static readonly int m_animIDSwimming = Animator.StringToHash("Swimming");
         protected static readonly int m_animIDInCover = Animator.StringToHash("InCover");
+        protected static readonly int m_animIDCoverDirection = Animator.StringToHash("CoverDirection");
         protected static readonly int m_animIDClimb = Animator.StringToHash("Climb");
         #endregion
 
@@ -119,15 +120,19 @@ namespace ThirdPersonTemplate
             if (val > 0)
             {
                 checkCanMove = m_PlayerRaycaster.CanGoLeftCover(-transform.forward);
+                m_Animator.SetFloat(m_animIDCoverDirection, val);
                 if (m_CameraLogic.CurrentState != "coverRight")
                     m_CameraLogic.SwitchCameraSetting("coverRight");
             }
             else if (val < 0)
             {
                 checkCanMove = m_PlayerRaycaster.CanGoRightCover(-transform.forward);
+                m_Animator.SetFloat(m_animIDCoverDirection, val);
                 if (m_CameraLogic.CurrentState != "coverLeft")
                     m_CameraLogic.SwitchCameraSetting("coverLeft");
             }
+
+
 
             m_targetSpeed = checkCanMove && val != 0 ? m_inCoverSpeed : 0;
 
@@ -139,7 +144,6 @@ namespace ThirdPersonTemplate
 
 
             m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
-
         }
 
         public virtual void Move(Vector3 direction, bool isRunning = false, Transform camera = null)
@@ -403,7 +407,7 @@ namespace ThirdPersonTemplate
 
             Debug.LogWarning("Angle Value : " + angle);
             Vector3 direction = (transform.position - point).normalized;
-            Vector3 coverPosition = point + 1.1f * m_CharacterController.radius * direction;
+            Vector3 coverPosition = point + .9f * m_CharacterController.radius * direction;
 
             transform.position = coverPosition;
             transform.rotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180));
