@@ -839,9 +839,9 @@ MonoBehaviour:
     m_Setting: {fileID: 11400000, guid: 8e27efedb9ca5f3448136c840d93780c, type: 2}
   - m_name: crouch
     m_Setting: {fileID: 11400000, guid: 1f7becf5f1f76804087164bcf5831662, type: 2}
-  - m_name: coverLeft
+  - m_name: leftCover
     m_Setting: {fileID: 11400000, guid: 86a2d32fd84ca1f48af3680731c5c03b, type: 2}
-  - m_name: coverRight
+  - m_name: rightCover
     m_Setting: {fileID: 11400000, guid: 2a008f08fc21c9748b4c01c58a82ea95, type: 2}
 --- !u!1 &410087039
 GameObject:

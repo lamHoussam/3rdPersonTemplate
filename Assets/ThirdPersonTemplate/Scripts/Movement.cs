@@ -121,15 +121,15 @@ namespace ThirdPersonTemplate
             {
                 checkCanMove = m_PlayerRaycaster.CanGoLeftCover(-transform.forward);
                 m_Animator.SetFloat(m_animIDCoverDirection, val);
-                if (m_CameraLogic.CurrentState != "coverRight")
-                    m_CameraLogic.SwitchCameraSetting("coverRight");
+                if (m_CameraLogic.CurrentState != "rightCover")
+                    m_CameraLogic.SwitchCameraSetting("rightCover");
             }
             else if (val < 0)
             {
                 checkCanMove = m_PlayerRaycaster.CanGoRightCover(-transform.forward);
                 m_Animator.SetFloat(m_animIDCoverDirection, val);
-                if (m_CameraLogic.CurrentState != "coverLeft")
-                    m_CameraLogic.SwitchCameraSetting("coverLeft");
+                if (m_CameraLogic.CurrentState != "leftCover")
+                    m_CameraLogic.SwitchCameraSetting("leftCover");
             }
 
 
@@ -228,7 +228,7 @@ namespace ThirdPersonTemplate
 
             m_isJumping = true;
             //m_isFalling = false;
-            if(m_Player.m_OnJump != null)
+            if (m_Player.m_OnJump != null)
             {
                 m_Player.m_OnJump.Invoke();
                 //m_Player.m_OnJump = null;
@@ -304,7 +304,7 @@ namespace ThirdPersonTemplate
 
             if (m_isFalling)
                 m_verticalSpeed -= Time.deltaTime * m_gravity;
-            else 
+            else
                 m_verticalSpeed = -0.1f;
 
             if (m_Animator.GetBool(m_animIDIsFalling) != m_isFalling)
@@ -346,7 +346,7 @@ namespace ThirdPersonTemplate
         public void CrouchStand()
         {
 
-            if (!m_activateCrouch) 
+            if (!m_activateCrouch)
                 return;
 
             if (!m_isCrouched)
@@ -374,7 +374,7 @@ namespace ThirdPersonTemplate
 
         public void OnStartSwimming()
         {
-            if (!m_activateSwim) 
+            if (!m_activateSwim)
                 return;
 
             m_isSwimming = true;
@@ -400,7 +400,7 @@ namespace ThirdPersonTemplate
             if (m_inCover || !m_PlayerRaycaster.CanTakeCover(out float angle, out _, out Vector3 point))
                 return;
 
-            m_CameraLogic.SwitchCameraSetting("coverLeft");
+            m_CameraLogic.SwitchCameraSetting("leftCover");
 
             m_inCover = true;
             m_Animator.SetBool(m_animIDInCover, InCover);
@@ -417,7 +417,7 @@ namespace ThirdPersonTemplate
 
         public void LeaveCover()
         {
-            if (!m_inCover) 
+            if (!m_inCover)
                 return;
 
             m_inCover = false;
@@ -427,7 +427,7 @@ namespace ThirdPersonTemplate
 
         public void SetCharacterControllerHeightCenter()
         {
-            if(m_isRolling || m_isCrouched)
+            if (m_isRolling || m_isCrouched)
             {
                 m_CharacterController.height = m_crouchHeight;
                 Vector3 center = m_CharacterController.center;
@@ -470,7 +470,7 @@ namespace ThirdPersonTemplate
         private void Update()
         {
             Gravity();
-            if (m_isSwimming) 
+            if (m_isSwimming)
                 ApplySwimForces();
             ManageRoll();
         }

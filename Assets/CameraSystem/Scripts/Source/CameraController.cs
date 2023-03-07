@@ -53,8 +53,9 @@ namespace CameraSystem
 
         private CameraSettings m_TargetSettings;
 
-
         [SerializeField] private float m_yaw, m_pitch;
+
+        private float m_distVar;
 
         private void LateUpdate()
         {
@@ -77,11 +78,15 @@ namespace CameraSystem
             m_distance += variation * m_blendDistanceVariation;
             m_offset += variation * m_blendOffsetVariation;
 
-            //m_distance = Mathf.Lerp(m_distance, m_TargetSettings.Distance, m_transitionLerpTime * Time.deltaTime);
-            //m_offset = Vector2.Lerp(m_offset, m_TargetSettings.Offset, m_transitionLerpTime * Time.deltaTime);
+            Vector3 currentOffsetVar = m_TargetSettings.Offset - m_offset;
 
-            if (Mathf.Abs(m_TargetSettings.Distance - m_distance) < .1f && Vector2.Distance(m_offset, m_TargetSettings.Offset) < .1f)
+            if(
+                Mathf.Sign(m_blendDistanceVariation) != Mathf.Sign(m_TargetSettings.Distance - m_distance)
+                || Mathf.Sign(m_blendOffsetVariation.x) != Mathf.Sign(currentOffsetVar.x)
+                || Mathf.Sign(m_blendOffsetVariation.y) != Mathf.Sign(currentOffsetVar.y)
+            )
                 SetCameraSettings(m_TargetSettings);
+
         }
 
 

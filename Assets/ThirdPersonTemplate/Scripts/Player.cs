@@ -6,16 +6,16 @@ namespace ThirdPersonTemplate
 {
     public class Player : Humanoid
     {
-        private InputAsset m_Input;
-        private CameraController m_CameraController;
-        private PlayerRaycaster m_PlayerRaycaster;
+        protected InputAsset m_Input;
+        protected CameraController m_CameraController;
+        protected PlayerRaycaster m_PlayerRaycaster;
 
-        private bool m_rightShoulder;
+        protected bool m_rightShoulder;
         public bool RightShoulder => m_rightShoulder;
 
         public UnityEvent m_OnMove, m_OnJump, m_OnCrouch;
 
-        private IInteractable m_NearInteractable;
+        protected IInteractable m_NearInteractable;
 
         public override void Awake()
         {
@@ -82,7 +82,7 @@ namespace ThirdPersonTemplate
 
         }
 
-        public void SwitchShoulders()
+        public virtual void SwitchShoulders()
         {
             if (m_Movement.InCover)
                 return;
