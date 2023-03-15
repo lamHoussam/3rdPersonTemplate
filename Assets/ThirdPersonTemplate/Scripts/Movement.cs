@@ -1,7 +1,5 @@
 using CameraSystem;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace ThirdPersonTemplate
 {

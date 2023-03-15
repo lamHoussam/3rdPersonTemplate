@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace NodeEditorFramework
@@ -15,6 +17,7 @@ namespace NodeEditorFramework
             m_Value = value;
         }
 
+#if UNITY_EDITOR
         public void Display()
         {
             if (m_Parameter == null)
@@ -46,7 +49,7 @@ namespace NodeEditorFramework
                 NodeEditor.Instance.OnClickRemoveCondition(this);
             }
         }
-
+#endif
         public bool Evaluate()
         {
             if (m_Parameter == null)

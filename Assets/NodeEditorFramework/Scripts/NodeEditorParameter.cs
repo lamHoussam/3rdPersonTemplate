@@ -1,6 +1,9 @@
 using System;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace NodeEditorFramework
 {
@@ -37,13 +40,13 @@ namespace NodeEditorFramework
             m_Value = value;
         }
 
+#if UNITY_EDITOR
 
         // TODO: Add Regex
         public bool CheckCanUseName(string newName)
         {
             return !NodeEditor.Instance.LoadedNodeCanvas.ContainsParameter(newName);
         }
-
 
 
         public void Display(Rect rect)
@@ -58,5 +61,6 @@ namespace NodeEditorFramework
 
             GUILayout.EndArea();
         }
+#endif
     }
 }

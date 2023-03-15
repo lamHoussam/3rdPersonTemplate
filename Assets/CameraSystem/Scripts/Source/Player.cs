@@ -1,6 +1,4 @@
 using CameraSystem;
-using JetBrains.Annotations;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour

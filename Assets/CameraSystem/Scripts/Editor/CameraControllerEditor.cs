@@ -1,10 +1,7 @@
-using Codice.Client.BaseCommands.BranchExplorer.Layout;
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
+
 using UnityEditor;
-using UnityEditor.Build.Content;
+
+#if UNITY_EDITOR
 using UnityEngine;
 
 namespace CameraSystem
@@ -220,3 +217,4 @@ namespace CameraSystem
         }
     }
 }
+#endif

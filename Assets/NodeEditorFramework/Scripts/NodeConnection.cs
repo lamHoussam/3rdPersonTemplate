@@ -1,6 +1,9 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace NodeEditorFramework
 {
@@ -17,6 +20,7 @@ namespace NodeEditorFramework
 
 
 
+#if UNITY_EDITOR
         public void SetNodeConnectionPoints(Node from, Node to)
         {
             m_From = from;
@@ -89,7 +93,12 @@ namespace NodeEditorFramework
 
             m_Conditions.Remove(cndition);
         }
-
+        public void OnRemove()
+        {
+            m_Conditions?.Clear();
+            m_From.RemoveConnection(this);
+        }       
+#endif
         public bool EvaluateConditions()
         {
             if (m_Conditions == null)
@@ -102,11 +111,6 @@ namespace NodeEditorFramework
             return true;
         }
 
-        public void OnRemove()
-        {
-            m_Conditions?.Clear();
-            m_From.RemoveConnection(this);
-        }       
 
     }
 }

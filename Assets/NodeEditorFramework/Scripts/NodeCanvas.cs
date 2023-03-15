@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace NodeEditorFramework
@@ -39,6 +41,7 @@ namespace NodeEditorFramework
 
         public NodeEditorParameter GetFirst() => ParametersCount == 0 ? null : m_Parameters[0];
         
+#if UNITY_EDITOR
         public void AddNode(Node node)
         {
             m_Nodes ??= new List<Node>();
@@ -89,27 +92,6 @@ namespace NodeEditorFramework
             m_NodesConnections.Add(nodeConnection);
         }
 
-        public void RemoveNodeConnection(NodeConnection nodeConnection) => m_NodesConnections?.Remove(nodeConnection);
-
-        public void RemoveNodeConnections(ICollection<NodeConnection> connections)
-        {
-
-        }
-
-        public Node Evaluate()
-        {
-
-            Node node = Entry;
-            Node next = node.GetNextNode();
-            while (next != null)
-            {
-                node = next;
-                next = next.GetNextNode();
-            }
-
-            return node;
-        }
-
         public void AddParameter(NodeEditorParameter parameter)
         {
             m_Parameters ??= new List<NodeEditorParameter>();
@@ -128,15 +110,6 @@ namespace NodeEditorFramework
                 AssetDatabase.Refresh();
             }
         }
-
-        public bool ContainsParameter(string name)
-        {
-            for(int i = 0; i < m_Parameters.Count; i++)
-                if (m_Parameters[i].Name.Equals(name))
-                    return true;
-
-            return false;
-        }
         
         public void DisplayParameters(Rect rect)
         {
@@ -150,6 +123,36 @@ namespace NodeEditorFramework
                 param.Display(rect);
                 rect.position += Vector2.up * 100;
             }
+        }
+        public void RemoveNodeConnection(NodeConnection nodeConnection) => m_NodesConnections?.Remove(nodeConnection);
+
+        public void RemoveNodeConnections(ICollection<NodeConnection> connections)
+        {
+
+        }
+#endif
+        public Node Evaluate()
+        {
+
+            Node node = Entry;
+            Node next = node.GetNextNode();
+            while (next != null)
+            {
+                node = next;
+                next = next.GetNextNode();
+            }
+
+            return node;
+        }
+
+
+        public bool ContainsParameter(string name)
+        {
+            for(int i = 0; i < m_Parameters.Count; i++)
+                if (m_Parameters[i].Name.Equals(name))
+                    return true;
+
+            return false;
         }
     }
 }

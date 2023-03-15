@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace NodeEditorFramework
@@ -23,6 +25,7 @@ namespace NodeEditorFramework
         protected bool m_isDragged;
         protected bool m_isEvaluationResult;
 
+#if UNITY_EDITOR
         public virtual void Draw(float scale = 1)
         {
             m_Rect.size = m_InitialRect.size * scale;
@@ -137,7 +140,7 @@ namespace NodeEditorFramework
                 AssetDatabase.Refresh();
             }
         }
-
+#endif
         public Node GetNextNode()
         {
 
