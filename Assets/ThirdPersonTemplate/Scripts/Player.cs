@@ -7,7 +7,10 @@ namespace ThirdPersonTemplate
     public class Player : Humanoid
     {
         protected InputAsset m_Input;
+
         protected CameraController m_CameraController;
+        protected CameraLogicGraph m_CameraGraph;
+
         protected PlayerRaycaster m_PlayerRaycaster;
 
         protected bool m_rightShoulder;
@@ -17,6 +20,14 @@ namespace ThirdPersonTemplate
 
         protected IInteractable m_NearInteractable;
 
+        public void InitCameraSettings()
+        {
+            m_CameraGraph.SetBool("crouch", false, false);
+            //m_CameraGraph.SetBool("aim", false, false);
+            m_CameraGraph.SetBool("rightShoulder", m_rightShoulder);
+
+        }
+
         public override void Awake()
         {
             base.Awake();
@@ -24,10 +35,12 @@ namespace ThirdPersonTemplate
             m_Input = GetComponent<InputAsset>();
 
             m_CameraController = Camera.main.GetComponent<CameraController>();
+            m_CameraGraph = m_CameraController.GetComponent<CameraLogicGraph>();
 
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
-            m_rightShoulder = true;
+            m_rightShoulder = false;
+            InitCameraSettings();
 
         }
 
@@ -89,7 +102,10 @@ namespace ThirdPersonTemplate
 
             m_rightShoulder = !m_rightShoulder;
 
-            m_CameraController.GetComponent<CameraLogic>().SwitchCameraSetting(m_rightShoulder ? "rightStand" : "leftStand");
+            //m_CameraController.GetComponent<CameraLogic>().SwitchCameraSetting(m_rightShoulder ? "rightStand" : "leftStand");
+            m_CameraGraph.SetBool("rightShoulder", m_rightShoulder);
+            Debug.Log("Right Shoulder value in graph : " + m_CameraGraph.GetBool("rightShoulder") + ";<()>;RS value : " + m_rightShoulder);
+            Debug.LogWarning("Crouch value in Graph : " + m_CameraGraph.GetBool("crouch") + ";<()>;" + m_Movement.IsCrouched);
         }
 
         private void OnTriggerEnter(Collider other)

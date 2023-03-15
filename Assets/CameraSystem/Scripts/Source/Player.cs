@@ -1,4 +1,5 @@
 using CameraSystem;
+using JetBrains.Annotations;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -12,12 +13,26 @@ public class Player : MonoBehaviour
 
     private bool m_crouched;
 
-    private CameraLogic m_CameraLogic;
+    private CameraLogicGraph m_CameraLogic;
     private float m_targetRotation;
+
+    private bool m_rightShoulder;
+
     private void Awake()
     {
         m_crouched = false;
-        m_CameraLogic = Camera.main.GetComponent<CameraLogic>();
+        m_rightShoulder = false;
+
+
+        m_CameraLogic = Camera.main.GetComponent<CameraLogicGraph>();
+        InitCameraSettings();
+    }
+
+    public void InitCameraSettings()
+    {
+        m_CameraLogic.SetBool("crouch", false, false);
+        m_CameraLogic.SetBool("aim", false, false);
+        m_CameraLogic.SetBool("rightShoulder", false);
     }
 
     private void Update()
@@ -46,12 +61,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             m_crouched = !m_crouched;
-            m_CameraLogic.SwitchCameraSetting(m_crouched ? "crouch" : "stand");
+            m_CameraLogic.SetBool("crouch", m_crouched);
+
+            //m_CameraLogic.SwitchCameraSetting(m_crouched ? "crouch" : "stand");
             //m_CameraLogic.GetComponent<CameraController>().BlendBetweenCameraSettings(m_crouched ? m_CrouchSettings : m_StandSettings);
         }
 
-
-        // move the player
-
-    }    
+        if (Input.GetKeyDown(KeyCode.Q))
+            SwitchShoulder();
+    }
+    public void SwitchShoulder()
+    {
+        Debug.Log("Switch");
+        m_rightShoulder = !m_rightShoulder;
+        m_CameraLogic.SetBool("rightShoulder", m_rightShoulder);
+    }
 }

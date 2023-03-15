@@ -829,20 +829,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37fd7a2f23042845ae9322558ca72fb, type: 3}
+  m_Script: {fileID: 11500000, guid: e254b1034d7651b4cbebfa0f5cc0a4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_triggerEvents:
-  - m_name: rightStand
-    m_Setting: {fileID: 11400000, guid: c6fcb892265b87d46bdeb50903a3787a, type: 2}
-  - m_name: leftStand
-    m_Setting: {fileID: 11400000, guid: 8e27efedb9ca5f3448136c840d93780c, type: 2}
-  - m_name: crouch
-    m_Setting: {fileID: 11400000, guid: 1f7becf5f1f76804087164bcf5831662, type: 2}
-  - m_name: leftCover
-    m_Setting: {fileID: 11400000, guid: 86a2d32fd84ca1f48af3680731c5c03b, type: 2}
-  - m_name: rightCover
-    m_Setting: {fileID: 11400000, guid: 2a008f08fc21c9748b4c01c58a82ea95, type: 2}
+  m_LogicCanvas: {fileID: 11400000, guid: c11fea1e9820492419f748d86d4c368a, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
