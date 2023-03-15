@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         m_crouched = false;
-        m_rightShoulder = false;
+        m_rightShoulder = true;
 
 
         m_CameraLogic = Camera.main.GetComponent<CameraLogicGraph>();
@@ -29,8 +29,8 @@ public class Player : MonoBehaviour
     public void InitCameraSettings()
     {
         m_CameraLogic.SetBool("crouch", false, false);
-        m_CameraLogic.SetBool("aim", false, false);
-        m_CameraLogic.SetBool("rightShoulder", false);
+        m_CameraLogic.SetBool("cover", false, false);
+        m_CameraLogic.SetBool("rightShoulder", true);
     }
 
     private void Update()

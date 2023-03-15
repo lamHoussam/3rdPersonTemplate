@@ -23,7 +23,7 @@ namespace ThirdPersonTemplate
         public void InitCameraSettings()
         {
             m_CameraGraph.SetBool("crouch", false, false);
-            //m_CameraGraph.SetBool("aim", false, false);
+            m_CameraGraph.SetBool("cover", false, false);
             m_CameraGraph.SetBool("rightShoulder", m_rightShoulder);
 
         }
@@ -39,7 +39,7 @@ namespace ThirdPersonTemplate
 
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
-            m_rightShoulder = false;
+            m_rightShoulder = true;
             InitCameraSettings();
 
         }
@@ -71,7 +71,7 @@ namespace ThirdPersonTemplate
                 m_Input.crouch = false;
             }
 
-            if (m_Input.switchShoulder)
+            if (m_Input.switchShoulder && !m_Movement.InCover)
             {
                 SwitchShoulders();
                 m_Input.switchShoulder = false;
@@ -97,15 +97,15 @@ namespace ThirdPersonTemplate
 
         public virtual void SwitchShoulders()
         {
-            if (m_Movement.InCover)
-                return;
+            //if (m_Movement.InCover)
+            //    return;
 
             m_rightShoulder = !m_rightShoulder;
 
             //m_CameraController.GetComponent<CameraLogic>().SwitchCameraSetting(m_rightShoulder ? "rightStand" : "leftStand");
             m_CameraGraph.SetBool("rightShoulder", m_rightShoulder);
-            Debug.Log("Right Shoulder value in graph : " + m_CameraGraph.GetBool("rightShoulder") + ";<()>;RS value : " + m_rightShoulder);
-            Debug.LogWarning("Crouch value in Graph : " + m_CameraGraph.GetBool("crouch") + ";<()>;" + m_Movement.IsCrouched);
+            //Debug.Log("Right Shoulder value in graph : " + m_CameraGraph.GetBool("rightShoulder") + ";<()>;RS value : " + m_rightShoulder);
+            //Debug.LogWarning("Crouch value in Graph : " + m_CameraGraph.GetBool("crouch") + ";<()>;" + m_Movement.IsCrouched);
         }
 
         private void OnTriggerEnter(Collider other)

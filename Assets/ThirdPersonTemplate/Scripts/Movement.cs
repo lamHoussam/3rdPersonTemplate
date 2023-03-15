@@ -1,4 +1,5 @@
 using CameraSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ThirdPersonTemplate
@@ -121,12 +122,16 @@ namespace ThirdPersonTemplate
                 checkCanMove = m_PlayerRaycaster.CanGoLeftCover(-transform.forward);
                 m_Animator.SetFloat(m_animIDCoverDirection, val);
 
-                //m_CameraLogic.SetBool()
+                if (m_Player.RightShoulder)
+                    m_Player.SwitchShoulders();
             }
             else if (val < 0)
             {
                 checkCanMove = m_PlayerRaycaster.CanGoRightCover(-transform.forward);
                 m_Animator.SetFloat(m_animIDCoverDirection, val);
+
+                if (!m_Player.RightShoulder)
+                    m_Player.SwitchShoulders();
             }
 
 
@@ -404,6 +409,7 @@ namespace ThirdPersonTemplate
 
             m_inCover = true;
             m_Animator.SetBool(m_animIDInCover, InCover);
+            m_CameraLogic.SetBool("cover", InCover);
 
             Debug.LogWarning("Angle Value : " + angle);
             Vector3 direction = (transform.position - point).normalized;
@@ -422,6 +428,7 @@ namespace ThirdPersonTemplate
 
             m_inCover = false;
             m_Animator.SetBool(m_animIDInCover, m_inCover);
+            m_CameraLogic.SetBool("cover", InCover);
             //m_CameraLogic.SwitchCameraSetting(m_Player.RightShoulder ? "rightStand" : "leftStand");
         }
 
