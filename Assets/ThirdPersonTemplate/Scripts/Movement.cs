@@ -190,12 +190,12 @@ namespace ThirdPersonTemplate
             Vector3 horizontalMotion = m_currentSpeed * Time.deltaTime * m_planeMoveDirection;
             m_CharacterController.Move(horizontalMotion + m_verticalSpeed * Time.deltaTime * Vector3.up);
 
-            if (m_Player.m_OnMove != null && horizontalMotion != Vector3.zero)
-            {
-                m_Player.m_OnMove?.Invoke();
-                //m_Player.m_OnMove = null;
-                //m_Player.m_OnMove.RemoveAllListeners();
-            }
+            //if (m_Player.m_OnMove != null && horizontalMotion != Vector3.zero)
+            //{
+            //    m_Player.m_OnMove?.Invoke();
+            //    //m_Player.m_OnMove = null;
+            //    //m_Player.m_OnMove.RemoveAllListeners();
+            //}
         }
 
         public virtual void Rotate(Vector3 inpDirection, out Vector3 finalDirection, Transform camera = null)
@@ -230,11 +230,11 @@ namespace ThirdPersonTemplate
 
             m_isJumping = true;
             //m_isFalling = false;
-            if (m_Player.m_OnJump != null)
-            {
-                m_Player.m_OnJump.Invoke();
-                //m_Player.m_OnJump = null;
-            }
+            //if (m_Player.m_OnJump != null)
+            //{
+            //    m_Player.m_OnJump.Invoke();
+            //    //m_Player.m_OnJump = null;
+            //}
             m_Animator.SetTrigger(m_animIDJump);
         }
 
@@ -339,11 +339,11 @@ namespace ThirdPersonTemplate
             //m_CameraLogic.SwitchCameraSetting("crouch");
             //m_CameraLogic.SetBool("crouch", m_isCrouched);
 
-            if (m_Player.m_OnCrouch != null)
-            {
-                m_Player.m_OnCrouch?.Invoke();
-                //m_Player.m_OnCrouch = null;
-            }
+            //if (m_Player.m_OnCrouch != null)
+            //{
+            //    m_Player.m_OnCrouch?.Invoke();
+            //    //m_Player.m_OnCrouch = null;
+            //}
             SetCharacterControllerHeightCenter();
         }
 

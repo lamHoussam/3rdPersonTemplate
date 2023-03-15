@@ -16,8 +16,6 @@ namespace ThirdPersonTemplate
         protected bool m_rightShoulder;
         public bool RightShoulder => m_rightShoulder;
 
-        public UnityEvent m_OnMove, m_OnJump, m_OnCrouch;
-
         protected IInteractable m_NearInteractable;
 
         public void InitCameraSettings()
