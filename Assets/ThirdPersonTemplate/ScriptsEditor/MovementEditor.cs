@@ -33,6 +33,8 @@ namespace ThirdPersonTemplate
         private SerializedProperty spActivateCrouch;
         private SerializedProperty spActivateSwim;
 
+        private SerializedProperty spClimbSpeed;
+
         public virtual void OnEnable()
         {
             spSpeed = serializedObject.FindProperty("m_speed");
@@ -60,6 +62,9 @@ namespace ThirdPersonTemplate
             spActivateCrouch = serializedObject.FindProperty("m_activateCrouch");
             spActivateRoll = serializedObject.FindProperty("m_activateRoll");
             spActivateSwim = serializedObject.FindProperty("m_ativateSwim");
+
+
+            spClimbSpeed = serializedObject.FindProperty("m_climbSpeed");
         }
 
         public override void OnInspectorGUI()
@@ -157,6 +162,16 @@ namespace ThirdPersonTemplate
             }
             EditorGUILayout.EndVertical();
 
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUILayout.LabelField("Climb", EditorStyles.boldLabel);
+
+            //EditorGUILayout.Prop
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(spClimbSpeed);
+            }
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }

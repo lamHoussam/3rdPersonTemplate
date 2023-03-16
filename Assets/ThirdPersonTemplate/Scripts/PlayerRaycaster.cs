@@ -92,12 +92,37 @@ namespace ThirdPersonTemplate
         }
 
 
-        public bool CanClimb()
+        public bool CanClimb(out float ang)
         {
             Ray ray = new Ray(m_ClimbRaycastOrigin.position, transform.forward);
 
             Debug.DrawRay(ray.origin, ray.direction * m_CanClimbDistance, Color.blue, 10);
-            return Physics.Raycast(ray, m_CanClimbDistance, m_ClimbLayer);
+
+
+            if (Physics.Raycast(ray, out RaycastHit hit, m_CanClimbDistance, m_ClimbLayer))
+            {
+                ang = Vector3.SignedAngle(/*m_CoverRaycastOrigin.position - */hit.point, hit.normal, Vector3.up);
+                return true;
+            }
+
+            ang = 0;
+            return false;
+        }
+
+        public bool ReachEndClimb(out Vector3 finalPosAfterClimb)
+        {
+
+            Ray ray = new Ray(m_ClimbRaycastOrigin.position, transform.forward);
+            Debug.DrawRay(ray.origin, ray.direction * m_CanClimbDistance, Color.blue, 10);
+
+            if(!Physics.Raycast(ray, m_CanClimbDistance, m_ClimbLayer))
+            {
+                finalPosAfterClimb = ray.origin + ray.direction * m_CanClimbDistance;
+                return true;
+            }
+
+            finalPosAfterClimb = Vector3.zero;
+            return false;
         }
     }
 }
