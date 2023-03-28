@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CameraSystem
@@ -24,13 +22,6 @@ namespace CameraSystem
         public float CameraLerpTime {
             get { return m_cameraLerpTime; }
             set { m_cameraLerpTime = value; }
-        }
-
-        [SerializeField] private Vector2 m_senstivity;
-        public Vector2 Sensitivity
-        {
-            get { return m_senstivity; }
-            set { m_senstivity = value; }
         }
     }
 }

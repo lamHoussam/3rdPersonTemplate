@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraSequence : MonoBehaviour
@@ -23,6 +21,9 @@ public class CameraSequence : MonoBehaviour
         //StartSequence();
     }
 
+    /// <summary>
+    /// Start sequence
+    /// </summary>
     public void StartSequence()
     {
         m_currentCameraTargetIndex = 0;
@@ -36,6 +37,9 @@ public class CameraSequence : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Stop sequence
+    /// </summary>
     public void StopSequence() => m_sequenceStarted = false; 
 
 

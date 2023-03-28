@@ -1,6 +1,7 @@
 using CameraSystem;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.UIElements;
 
 namespace ThirdPersonTemplate
@@ -58,6 +59,8 @@ namespace ThirdPersonTemplate
         protected bool m_isRolling;
         protected bool m_isSwimming;
 
+        protected bool m_isEndingClimb;
+
         protected bool m_isClimbing;
         public bool IsClimbing => m_isClimbing;
 
@@ -68,6 +71,7 @@ namespace ThirdPersonTemplate
         public bool IsCrouched => m_isCrouched;
 
         protected Vector3 m_planeMoveDirection;
+        protected Vector3 m_endClimbDirection, m_climbFinalDestination;
 
         #region Animation IDs
         protected static readonly int m_animIDSpeed = Animator.StringToHash("Speed");
@@ -109,6 +113,7 @@ namespace ThirdPersonTemplate
             m_canMove = true;
             m_canJump = true;
 
+            m_isEndingClimb = false;
 
             m_planeMoveDirection = Vector2.zero;
         }
@@ -515,8 +520,16 @@ namespace ThirdPersonTemplate
             if (m_PlayerRaycaster.ReachEndClimb(out Vector3 finalPos))
             {
                 Debug.Log("Reach end");
-                transform.position = finalPos;
-                StopLadderClimb();
+                m_isEndingClimb = true;
+                m_isClimbing = false;
+
+                m_climbFinalDestination = finalPos;
+                m_endClimbDirection = finalPos - transform.position;
+                m_endClimbDirection.Normalize();
+                //transform.position = finalPos;
+                m_canMove = false;
+                m_canJump = false;
+                // TODO: Stop climb over time
                 return;
             }
 
@@ -528,23 +541,31 @@ namespace ThirdPersonTemplate
             m_Animator.SetFloat(m_animIDSpeed, m_currentSpeed);
 
             Vector3 movement = m_currentSpeed * Time.deltaTime * val * transform.up;
-            Debug.Log("MOvement : " + movement);
             Debug.DrawRay(transform.position, movement, Color.yellow, 10);
             m_CharacterController.Move(movement);
 
         }
 
+        private void EndOfClimb()
+        {
+            m_CharacterController.Move(m_endClimbDirection * Time.deltaTime);
+
+            float distance = Vector3.Distance(m_climbFinalDestination, transform.position);
+            if (distance < .1f)
+            {
+                StopLadderClimb();
+                m_isEndingClimb = false;
+            }
+        }
+
         public void StopLadderClimb()
         {
-            m_isClimbing = false;
+            m_canMove = false;
+            m_canJump = false;
+
             m_Animator.SetBool(m_animIDClimb, m_isClimbing);
         }
         #endregion
-
-        //public void Climb()
-        //{
-        //    m_Animator.SetTrigger(m_animIDClimb);
-        //}
 
         public void DeactivateMovement()
         {
@@ -571,6 +592,10 @@ namespace ThirdPersonTemplate
             Gravity();
             if (m_isSwimming)
                 ApplySwimForces();
+
+            if (m_isEndingClimb)
+                EndOfClimb();
+
             ManageRoll();
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NodeEditorFramework;
 
-public class #SCRIPTNAME# : Node
+public class TesterNode : Node
 {
     #region Members
     #endregion Members
@@ -11,9 +11,9 @@ public class #SCRIPTNAME# : Node
 
 #if UNITY_EDITOR
     public override bool Removable => base.Removable;
-    public static #SCRIPTNAME# Create(Rect rect)
+    public static TesterNode Create(Rect rect)
     {
-        #SCRIPTNAME# node = CreateInstance<#SCRIPTNAME#>();
+        TesterNode node = CreateInstance<TesterNode>();
 
         node.m_Rect = rect;
         node.m_InitialRect = rect;
@@ -21,19 +21,19 @@ public class #SCRIPTNAME# : Node
         node.Init();
 
         return node;
-        #NOTRIM#
+        
     }
 
     public override void Draw(float scale = 1)
     {
-        #NOTRIM#
+        
         base.Draw(scale);
         GUILayout.BeginArea(m_Rect, m_isEvaluationResult ? NodeEditor.Instance.m_EvaluatedNodeResult : NodeEditor.Instance.m_NodeBox);
     }
     
     public override void OnRemove()
     {
-        #NOTRIM#
+        
         base.OnRemove();
     }
 #endif

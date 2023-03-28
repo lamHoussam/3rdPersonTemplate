@@ -6,6 +6,7 @@ namespace NodeEditorFramework
     {
 
         private int m_value;
+
 #if UNITY_EDITOR
         public static TestNode Create(Rect rect)
         {

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 using UnityEngine;
 
 namespace NodeEditorFramework
@@ -10,6 +8,7 @@ namespace NodeEditorFramework
     public class EntryNode : Node
     {
 #if UNITY_EDITOR
+        public override bool Removable => false;
         public static EntryNode Create(Rect rect)
         {
             EntryNode node = CreateInstance<EntryNode>();
@@ -20,8 +19,6 @@ namespace NodeEditorFramework
             node.Init();
             return node;
         }
-
-
 
         public override void Draw(float scale = 1)
         {

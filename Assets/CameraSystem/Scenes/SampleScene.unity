@@ -521,8 +521,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.010470025, y: 0.018323926, z: 0.00019189471, w: 0.99977726}
-  m_LocalPosition: {x: 0.6725554, y: 1.4274546, z: -3.4902673}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0.00000004371139}
+  m_LocalPosition: {x: 1.0900004, y: 1.5, z: 17.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -542,13 +542,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 1157153176}
-  m_distance: 6
-  m_offset: {x: 0.8, y: 1}
-  m_assetName: CameraSetting
+  m_distance: 4.23
+  m_offset: {x: -1.09, y: 1}
+  m_assetName: StandRight
   m_assetPath: Assets/CameraSystem/CameraSettings
   m_cameraLerpTime: 50
   m_sensitivity: {x: 100, y: 100}
   m_useYawLimit: 0
+  m_usePitchLimit: 1
   m_minPitchValue: -10
   m_maxPitchValue: 70
   m_yawMinValue: -180
@@ -558,19 +559,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_active: 1
-  m_transitionLerpTime: 4
+  m_transitionTime: 0.6
   m_TransitionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 8.180965
-      outSlope: 8.180965
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0125
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
@@ -583,10 +584,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_CameraSettingsToLoad: {fileID: 11400000, guid: ddb5991a72c7533418a8bf03d99db3a4, type: 2}
-  m_CameraType: 0
-  m_yaw: 2.1
-  m_pitch: -1.2
+  m_CameraSettingsToLoad: {fileID: 11400000, guid: a813c3013684d0a468c206cb62a9583e, type: 2}
+  m_TargetLockOn: {fileID: 865817251}
+  m_yaw: 180
+  m_pitch: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,14 +597,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37fd7a2f23042845ae9322558ca72fb, type: 3}
+  m_Script: {fileID: 11500000, guid: e254b1034d7651b4cbebfa0f5cc0a4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_triggerEvents:
-  - m_name: stand
-    m_Setting: {fileID: 11400000, guid: ddb5991a72c7533418a8bf03d99db3a4, type: 2}
-  - m_name: crouch
-    m_Setting: {fileID: 11400000, guid: 2413f1d3a45d0c644b7a0e0d9b851110, type: 2}
+  m_LogicCanvas: {fileID: 11400000, guid: daecfc1449e30a74988922539ad0f2ca, type: 2}
 --- !u!1 &1157153172
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +692,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157153172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 13.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

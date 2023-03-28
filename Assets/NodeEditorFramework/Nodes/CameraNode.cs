@@ -1,8 +1,6 @@
 using UnityEngine;
 using NodeEditorFramework;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 namespace CameraSystem
 {
@@ -13,7 +11,6 @@ namespace CameraSystem
         public CameraSettings Settings => m_CameraSettings;
         #endregion Members
 
-#if UNITY_EDITOR
         public static CameraNode Create(Rect rect)
         {
             CameraNode node = CreateInstance<CameraNode>();
@@ -38,11 +35,11 @@ namespace CameraSystem
             GUILayout.EndArea();
 
         }
+
         public override void OnRemove()
         {
 
             base.OnRemove();
         }
-#endif
     }
 }
