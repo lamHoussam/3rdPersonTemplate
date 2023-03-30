@@ -18,14 +18,6 @@ namespace ThirdPersonTemplate
 
         protected IInteractable m_NearInteractable;
 
-        public void InitCameraSettings()
-        {
-            m_CameraGraph.SetBool("crouch", false, false);
-            m_CameraGraph.SetBool("cover", false, false);
-            m_CameraGraph.SetBool("rightShoulder", m_rightShoulder);
-
-        }
-
         public override void Awake()
         {
             base.Awake();
@@ -38,7 +30,7 @@ namespace ThirdPersonTemplate
             m_PlayerRaycaster = GetComponent<PlayerRaycaster>();
 
             m_rightShoulder = true;
-            InitCameraSettings();
+
 
         }
 

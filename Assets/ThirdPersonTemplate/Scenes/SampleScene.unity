@@ -1304,8 +1304,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -1313,8 +1313,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e254b1034d7651b4cbebfa0f5cc0a4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LogicCanvas: {fileID: 11400000, guid: 3e53186b082de2048ae27f083f70e371, type: 2}
+  m_LogicCanvas: {fileID: 11400000, guid: caf7a92128d55ad4e919ac266a069330, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
