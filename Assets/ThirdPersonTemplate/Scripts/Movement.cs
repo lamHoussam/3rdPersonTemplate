@@ -116,6 +116,10 @@ namespace ThirdPersonTemplate
             m_isEndingClimb = false;
 
             m_planeMoveDirection = Vector2.zero;
+
+
+
+            m_CameraLogic.SetCameraSettingsFromGraph();
         }
 
 
@@ -403,20 +407,24 @@ namespace ThirdPersonTemplate
             m_CameraLogic.SetBool("cover", InCover);
 
             Debug.LogWarning("Angle Value : " + angle);
+
+            point = new Vector3(point.x, transform.position.y, point.z);
+
             Vector3 direction = (transform.position - point).normalized;
             Vector3 coverPosition = point + .9f * m_CharacterController.radius * direction;
 
             transform.position = coverPosition;
             transform.rotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180));
 
-            //transform.SetPositionAndRotation(coverPosition, Quaternion.Euler(transform.eulerAngles + Vector3.up * (angle - 180)));
+            float val = m_Player.RightShoulder ? -1 : 1;
+            m_Animator.SetFloat(m_animIDCoverDirection, val);
         }
         // TODO: Add Cover camera settings
         private void CoverMove(Vector3 direction)
         {
             float val = direction.x == 0 ? 0 : -Mathf.Sign(direction.x);
 
-            if (direction.z != 0)
+            if (Mathf.Abs(direction.z) == 1)
             {
                 LeaveCover();
                 return;

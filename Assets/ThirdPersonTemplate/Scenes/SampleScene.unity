@@ -1286,12 +1286,12 @@ MonoBehaviour:
   m_assetPath: Assets/CameraSystem/CameraSettings
   m_cameraLerpTime: 40
   m_sensitivity: {x: 25, y: 25}
-  m_useYawLimit: 1
+  m_useYawLimit: 0
   m_usePitchLimit: 1
   m_minPitchValue: -10
   m_maxPitchValue: 70
-  m_yawMinValue: -180
-  m_yawMaxValue: 180
+  m_yawMinValue: -10
+  m_yawMaxValue: 70
   m_enableCameraCollision: 1
   m_cameraCollisionLayer:
     serializedVersion: 2

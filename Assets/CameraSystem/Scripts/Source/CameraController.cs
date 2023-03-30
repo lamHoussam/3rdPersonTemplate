@@ -93,7 +93,8 @@ namespace CameraSystem
             m_pitch += Time.deltaTime * look.y * m_sensitivity.y;
             m_yaw += Time.deltaTime * look.x * m_sensitivity.x;
 
-            m_pitch = ClampAngle(m_pitch, m_minPitchValue, m_maxPitchValue);
+            if (m_usePitchLimit)
+                m_pitch = ClampAngle(m_pitch, m_minPitchValue, m_maxPitchValue);
             if (m_useYawLimit)
                 m_yaw = ClampAngle(m_yaw, m_yawMinValue, m_yawMaxValue);
         }
